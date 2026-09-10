@@ -147,6 +147,74 @@ Did several rounds of navigate → screenshot → measure via
 Verified clean (no console errors, no horizontal overflow, nav drawer still
 functional) at 390 / 768 / 941 / 1024 / 1440px after all changes.
 
+## Homepage correction pass #2 (2026-09-10, same day)
+
+User said the homepage still wasn't close enough and gave a much more
+detailed checklist, focused entirely on header/hero/archival area (explicitly
+told to leave Supabase/admin/other pages untouched). Did a full fresh asset
+inventory + pixel-level investigation before changing anything:
+
+- **Confirmed via `file` on every asset**: all supplied images are very
+  low-resolution (crest 294×334, architecture 316×334, family photo
+  391×263, and — important — the texture files 09/10/11/13/14 are only
+  ~124-134×54px). No hidden/better logo or seal asset exists anywhere in the
+  project; `01_logo_emblem*.png` remains a small triangle/pyramid mark
+  unrelated to the reference's ornate "R", confirming the CSS-built monogram
+  from pass #1 is genuinely the best option, not a shortcut.
+- **Found the real cause of the "wax seal looks like a square sticker" bug**,
+  which pass #1 had incorrectly marked as resolved. Sampled actual pixel
+  alpha values of `06_red_wax_seal_transparent.png` via canvas
+  `getImageData()`: corners read up to 92% opaque (not 0%) and alpha is
+  noisy/high almost everywhere, not just at the edges. The file is NOT a
+  clean cutout — testing it against a black page background earlier (pass 1)
+  was misleading because semi-transparent dark pixels look identical to
+  fully-transparent ones on black. Fixed properly: wrapped the `<img>` in a
+  `.wax-seal` div, applied a clean circular `mask-image` (radial-gradient) to
+  the inner `.wax-seal-img`, and kept `filter: drop-shadow(...)` on the OUTER
+  wrapper only. This two-layer split is necessary because `filter` is
+  computed before `mask` in the CSS rendering pipeline — masking a single
+  element doesn't clean up its own drop-shadow, which would otherwise still
+  be computed from the noisy pre-mask alpha and re-create a ghost square. If
+  this ever regresses, check that the mask and the filter are still on two
+  different nested elements, not the same one.
+- **Hero/archival composition rebalanced** per detailed feedback: crest
+  enlarged and mask loosened further (now shows the full crown/shield/lions
+  and the "CONCORDIA…" banner, not just the top portion) with `mix-blend-mode:
+  screen`; architecture layer narrowed (62%→54% width) and its mask pushed
+  right so it stays fully transparent until ~58% of the hero's width and
+  fully opaque past ~70%, instead of ghosting into the center like before.
+- **"Huge empty gap" complaint**: measured precisely via
+  `getBoundingClientRect()` at 390/941/1440 before changing anything — the
+  actual gap between the buttons and the parchment section was 56-96px, not
+  "hundreds of pixels" as described. Trimmed it further anyway (hero
+  `padding-bottom` clamp max 96px→64px, `.archival-section` top padding
+  76px→44px) since tightening it is a safe, direct response regardless of
+  the exact prior measurement, and it's possible the user was viewing a
+  wider real browser window or a cached version.
+- **Texture "seams/blocks" bug**: found `.archival-section::before` was
+  painting the old-map texture at "40% auto" sizing anchored bottom-right —
+  directly overlapping the wax seal's corner and creating a hard-edged
+  rectangle there (on top of, not instead of, the alpha-channel issue above).
+  Replaced with: a single non-repeating `background-size: cover` parchment
+  wash (`mix-blend-mode: multiply`, 0.16 opacity — cover + single instance
+  means no repeat boundary is possible), plus one small script-texture accent
+  confined to the bottom-LEFT corner only (away from the seal) with a radial
+  mask so it fades out instead of ending in a hard edge.
+- Photo frame border-radius reduced (20px/14px → 6px/3px) and box-shadow
+  softened — was reading as a "modern rounded card" rather than a frame.
+
+Re-verified no console errors and no horizontal overflow at all five
+breakpoints (390/768/941/1024/1440) after this round, and that the nav
+drawer still opens/closes correctly.
+
+**Known remaining limitation, not a bug**: the hero title's font-size ceiling
+is capped at 84px (spec suggested 90-105px) because anything larger causes
+real text-overflow at 1024px and 390px widths, given the fixed 860px
+`hero-content` max-width — see pass #1 notes above for the exact math. This
+was a deliberate trade-off (no overflow > exact px target) and would need a
+structural change (e.g. a viewport-aware `hero-content` max-width) to safely
+increase further.
+
 ## Notes / Decisions
 
 - No zip was present; individual asset files were already loose in the project

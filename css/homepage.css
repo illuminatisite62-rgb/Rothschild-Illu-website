@@ -8,7 +8,7 @@
   background: var(--color-navy-deepest);
   overflow: hidden;
   padding-top: clamp(32px, 6vw, 72px);
-  padding-bottom: clamp(56px, 8vw, 96px);
+  padding-bottom: clamp(40px, 5vw, 64px);
 }
 
 .hero-art {
@@ -21,25 +21,25 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 62%;
-  height: 90%;
+  width: 54%;
+  height: 92%;
   background: url("../assets/images/04_hero_classical_architecture.jpg") no-repeat top right / cover;
-  filter: grayscale(0.3) sepia(0.2) brightness(0.86) contrast(1.1);
-  -webkit-mask-image: linear-gradient(100deg, transparent 0%, rgba(0, 0, 0, 0.5) 14%, #000 32%);
-  mask-image: linear-gradient(100deg, transparent 0%, rgba(0, 0, 0, 0.5) 14%, #000 32%);
+  filter: grayscale(0.3) sepia(0.2) brightness(0.88) contrast(1.08);
+  -webkit-mask-image: linear-gradient(100deg, transparent 0%, transparent 20%, rgba(0, 0, 0, 0.45) 30%, #000 46%);
+  mask-image: linear-gradient(100deg, transparent 0%, transparent 20%, rgba(0, 0, 0, 0.45) 30%, #000 46%);
 }
 
 .hero-art-crest {
   position: absolute;
-  top: 4%;
+  top: 2%;
   left: 0;
-  width: 50%;
+  width: 56%;
   height: 64%;
   background: url("../assets/images/03_hero_crest_engraving.png") no-repeat left top / contain;
-  opacity: 0.88;
+  opacity: 0.92;
   mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(ellipse 78% 82% at 30% 30%, #000 62%, transparent 96%);
-  mask-image: radial-gradient(ellipse 78% 82% at 30% 30%, #000 62%, transparent 96%);
+  -webkit-mask-image: radial-gradient(ellipse 88% 92% at 34% 32%, #000 70%, transparent 99%);
+  mask-image: radial-gradient(ellipse 88% 92% at 34% 32%, #000 70%, transparent 99%);
 }
 
 .hero-art-texture {
@@ -152,17 +152,35 @@
 .archival-section {
   position: relative;
   background: var(--color-parchment);
-  padding: 76px 0 46px;
+  padding: 44px 0 40px;
 }
 
+/* Subtle overall paper-grain wash. A single non-repeating cover-sized layer
+   at very low opacity — no tiling, so there is no repeat seam anywhere. */
 .archival-section::before {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    url("../assets/images/11_old_script_texture.jpg") no-repeat left bottom / 46% auto,
-    url("../assets/images/13_old_map_texture.jpg") no-repeat right bottom / 40% auto;
-  opacity: 0.1;
+  background: url("../assets/images/09_parchment_texture.jpg") no-repeat center / cover;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* A single soft handwriting accent, confined to the bottom-left corner only
+   (well clear of the wax seal in the bottom-right) and faded on every edge
+   via a radial mask so it has no visible rectangular boundary. */
+.archival-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 42%;
+  height: 34%;
+  background: url("../assets/images/11_old_script_texture.jpg") no-repeat left bottom / cover;
+  opacity: 0.14;
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 15% 100%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 75% 75% at 15% 100%, #000 0%, transparent 75%);
   pointer-events: none;
 }
 
@@ -171,17 +189,17 @@
   max-width: 840px;
   width: 90%;
   margin: 0 auto;
-  border: 2px solid var(--color-gold);
-  border-radius: 20px;
-  padding: 10px;
+  border: 1.5px solid var(--color-gold);
+  border-radius: 6px;
+  padding: 8px;
   background: var(--color-parchment-light);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 10px 26px -14px rgba(30, 20, 5, 0.4);
 }
 
 .photo-frame-inner {
   position: relative;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 3px;
   aspect-ratio: 1.86 / 1;
 }
 
@@ -280,8 +298,26 @@
   width: clamp(110px, 18vw, 182px);
   height: clamp(110px, 18vw, 182px);
   z-index: 4;
+  /* filter lives on this OUTER wrapper so the drop-shadow is computed from
+     the already-masked (clean circular) child below it, not from the source
+     PNG's own noisy alpha channel. If drop-shadow were applied directly to
+     a masked element, the shadow is computed before the mask crops it —
+     see .wax-seal-img for why the mask has to live one level down. */
   filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.5)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
   transform: rotate(-5deg);
+}
+
+.wax-seal-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* The supplied "transparent" PNG's alpha channel is noisy and only
+     partially transparent outside the wax disc (sampled: corners read up to
+     92% opaque, not 0%), which reads as a faint square halo against the
+     parchment. Force a clean circular cutout here so only the actual wax
+     disc paints, regardless of the source file's imperfect alpha. */
+  -webkit-mask-image: radial-gradient(circle at 50% 49%, #000 0%, #000 80%, transparent 90%);
+  mask-image: radial-gradient(circle at 50% 49%, #000 0%, #000 80%, transparent 90%);
 }
 
 .homepage-tagline {
