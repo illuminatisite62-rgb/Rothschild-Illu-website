@@ -48,7 +48,27 @@ Last updated: 2026-09-10
 - [x] 18. Write README — README.md written (project overview, Supabase setup,
       admin auth explanation, first-admin creation, local run, GitHub connect,
       Vercel deploy, how to update later, full file structure reference)
-- [ ] 19. Final test and cleanup — next
+- [x] 19. Final test and cleanup — re-verified after the second app crash:
+      no file corruption (checked sizes/tails of every file touched near the
+      crash), initial git commit created (74 files, see commit 185f907),
+      dev server restarts cleanly, homepage screenshot-confirmed pixel-for-
+      pixel identical to the pre-crash version, zero console errors.
+
+## Remaining work (needs the user)
+
+Everything that can be built without external accounts is done. Two things
+are blocked on the user's action — see the BLOCKER note above for full detail:
+
+1. **Supabase**: not yet connected to a real project (CLI installed but not
+   logged in). Until then the site runs entirely on its built-in sample data.
+2. **GitHub**: local git repo is initialized and committed, but there's no
+   `gh` CLI available in this environment, so no remote/push has happened.
+   The user needs to either create a GitHub repo manually and give me the
+   remote URL to push to, or install+authenticate `gh` themselves.
+
+Once both are done, remaining work is genuinely small: paste Supabase
+URL/anon key into js/config.js, run the 3-4 SQL files, create the first admin
+user, push to GitHub, import into Vercel.
 
 ## Notes / Decisions
 
