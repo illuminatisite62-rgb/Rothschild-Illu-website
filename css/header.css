@@ -5,18 +5,38 @@
 .site-header {
   position: relative;
   z-index: 100;
+  overflow: hidden;
   background:
-    linear-gradient(120deg, var(--color-navy-deepest) 0%, var(--color-navy) 46%, var(--color-parchment-dark) 100%);
-  border-bottom: 2px solid var(--color-gold-deep);
+    linear-gradient(110deg,
+      var(--color-navy-deepest) 0%,
+      var(--color-navy) 36%,
+      var(--color-navy-light) 46%,
+      #8a6a34 58%,
+      var(--color-parchment-dark) 72%,
+      var(--color-parchment-dark) 100%);
+  border-bottom: 1.5px solid var(--color-gold);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
 }
 
+.site-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/images/11_old_script_texture.jpg") repeat;
+  background-size: 600px;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
 .site-header .container {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: var(--header-height);
+  min-height: clamp(100px, 16.5vw, 168px);
   padding-top: 14px;
   padding-bottom: 14px;
 }
@@ -61,17 +81,58 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* Large plain-letter monogram — header context only. Footer/admin keep the
+   compact circular badge defined above. */
+.site-header .monogram {
+  width: auto;
+  height: auto;
+  border: none;
+  border-radius: 0;
+  background: none;
+  position: relative;
+  line-height: 1;
+}
+
+.site-header .monogram::before {
+  display: none;
+}
+
+.site-header .monogram-letter {
+  font-size: clamp(64px, 10vw, 108px);
+  line-height: 0.78;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #f6e3ae 0%, #e2c07d 32%, #c9a24b 58%, #8a691f 88%, #6b4f18 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.55));
+}
+
+.site-header .monogram-letter::after {
+  content: "\269C";
+  position: absolute;
+  left: 0.06em;
+  bottom: 0.1em;
+  font-size: 0.19em;
+  font-style: normal;
+  color: #8a691f;
+  -webkit-text-fill-color: #8a691f;
+  filter: none;
+  opacity: 0.85;
+}
+
 .brand-text {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
   min-width: 0;
 }
 
 .brand-name {
   font-family: var(--font-display);
-  font-size: 24px;
-  letter-spacing: var(--tracking-wide);
+  font-size: clamp(20px, 2.6vw, 27px);
+  letter-spacing: 0.22em;
   color: var(--color-cream);
   white-space: nowrap;
 }

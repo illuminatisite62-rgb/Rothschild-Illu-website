@@ -20,7 +20,8 @@
 /* Tablet landscape / small desktop */
 @media (max-width: 1024px) {
   .container {
-    padding: 0 24px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 
   .featured-grid {
@@ -89,15 +90,6 @@
 
   .hero-description {
     font-size: 15.5px;
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .hero-buttons .btn {
-    justify-content: center;
   }
 
   .photo-caption-top,
@@ -228,7 +220,8 @@
 /* Mobile */
 @media (max-width: 480px) {
   .container {
-    padding: 0 18px;
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
   .site-header .container {
@@ -255,6 +248,10 @@
 
   .monogram-letter {
     font-size: 19px;
+  }
+
+  .site-header .monogram-letter {
+    font-size: 48px;
   }
 
   .hamburger {
@@ -286,16 +283,26 @@
   }
 
   .hero-title {
-    font-size: 34px;
+    font-size: clamp(30px, 10.5vw, 42px);
   }
 
   .hero-subtitle {
-    font-size: 18px;
+    font-size: 19px;
   }
 
   .hero-description {
     font-size: 14.5px;
     line-height: 1.75;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-buttons .btn {
+    justify-content: center;
+    min-width: 0;
   }
 
   .archival-section {
@@ -308,7 +315,7 @@
   }
 
   .photo-frame-inner {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 1.75 / 1;
   }
 
   .photo-caption-top {

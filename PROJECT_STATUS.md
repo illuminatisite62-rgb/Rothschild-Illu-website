@@ -70,6 +70,83 @@ Once both are done, remaining work is genuinely small: paste Supabase
 URL/anon key into js/config.js, run the 3-4 SQL files, create the first admin
 user, push to GitHub, import into Vercel.
 
+## Homepage visual correction pass (2026-09-10, post-launch)
+
+The user reported the homepage wasn't close enough to
+`assets/images/reference-homepage.png` and asked for an iterative
+screenshot-compare-correct pass at the reference's exact 941×1672 viewport.
+Did several rounds of navigate → screenshot → measure via
+`getBoundingClientRect()` → adjust CSS → repeat. Key findings and fixes:
+
+- **Real pre-existing bug found**: `.container { padding: 0 24px; }` inside
+  the `@media (max-width: 1024px)` block in responsive.css was using the
+  `padding` shorthand, which silently zeroed out `.hero-content`'s
+  `padding-top` (set in homepage.css) at any viewport ≤1024px — this is why
+  the hero always looked vertically compressed compared to the reference.
+  Fixed by changing those two shorthand overrides (1024px and 480px
+  breakpoints) to `padding-left`/`padding-right` only. Same fix applied in
+  both places. **Watch for this pattern elsewhere**: any future
+  `.container { padding: ... }` override in a media query will re-introduce
+  this bug for any component relying on `.container`'s default vertical
+  padding being untouched.
+- **Real mobile bug found**: `.photo-frame-inner` had `aspect-ratio: 4/5`
+  (portrait) inside the `@media (max-width: 480px)` block, making the
+  archival photo card tall/portrait-shaped on phones despite being correctly
+  landscape everywhere else. Fixed to `1.75/1` (landscape), matching the base
+  desktop ratio (now `1.86/1`). This was likely the actual root of "looks
+  wrong on a phone."
+- **Real overflow bug introduced then caught during this pass**: initially
+  set `.hero-title` font-size clamp with a 94px ceiling to hit the requested
+  "90-105px" size, plus `white-space: nowrap` — this overflowed and got
+  visibly clipped at both very narrow (390px, text ran off-screen) and
+  mid-wide (1024px, text spilled past its own container) viewports, because
+  `.hero-content`'s `max-width: 860px` combined with the site's padding
+  breakpoints creates a widest-case available text width of ~796-812px
+  regardless of viewport, and 94px "THE ROTHSCHILD" needs ~866px. Fixed by:
+  lowering the font-size ceiling to 84px (still fits comfortably everywhere,
+  confirmed via rect measurement at 390/768/941/1024/1440 — always ≥40px
+  margin before the container edge), and scoping `white-space: nowrap` to
+  `@media (min-width: 850px)` only so it's free to wrap to 2-3 lines on
+  narrow screens instead of overflowing. **If the title font is ever made
+  bigger again, re-verify with `getBoundingClientRect()` at all breakpoints,
+  not just a screenshot** — the overflow was clipped by `.hero { overflow:
+  hidden }` so it didn't cause page-level horizontal scroll and was easy to
+  miss without exact measurement.
+- Header rebuilt: large plain-serif-italic "R" monogram with a small
+  fleur-de-lis glyph baked in via `::after` (CSS only, no image, no HTML
+  change needed — see `.site-header .monogram-letter` in header.css), scoped
+  so it ONLY affects the header (footer/admin still use the original compact
+  circular badge). Header height increased (clamp up to 168px), background
+  gradient stops adjusted twice (first pass looked right in isolation but put
+  the "History / Shapes / Tomorrow" tagline in the dark-brown transition zone
+  with poor contrast — fixed by moving the light-parchment zone earlier in
+  the gradient).
+- Hero crest opacity/size increased substantially (0.65→0.88, wider mask) so
+  it reads as "clearly visible" per the reference rather than nearly
+  invisible; architecture mask/filter loosened (less dark, starts closer to
+  center) to match the reference's brighter, more centrally-anchored
+  building.
+- Hero vertical rhythm retuned (padding-top clamps on `.hero` and
+  `.hero-content`) so `ESTABLISHED 1760` and the hero's total height land
+  within ~20px of the reference's target y-coordinates at 941 width
+  (verified via rect measurement, not just eyeballing).
+- Established-line rules, ornament-divider lines, subtitle size, description
+  width, and button size/gradient/radius all adjusted to match the spec's
+  approximate target measurements (verified subtitle/description hit their
+  target ranges almost exactly via rect measurement).
+- Button-stacking breakpoint moved from 768px down to 480px (side-by-side
+  much further down before stacking, matching "stack only near phone
+  width").
+- Archival photo frame: aspect ratio, border-radius (20px outer / 14px
+  inner), width (90%), caption styling (uppercase, 3-line top caption),
+  play-button and wax-seal sizes all increased substantially per spec, using
+  `clamp()` so they scale smoothly rather than jumping at breakpoints.
+- Parchment section background now layers the old-script and old-map
+  textures (low opacity) instead of just one texture.
+
+Verified clean (no console errors, no horizontal overflow, nav drawer still
+functional) at 390 / 768 / 941 / 1024 / 1440px after all changes.
+
 ## Notes / Decisions
 
 - No zip was present; individual asset files were already loose in the project

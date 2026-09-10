@@ -7,8 +7,8 @@
   position: relative;
   background: var(--color-navy-deepest);
   overflow: hidden;
-  padding-top: clamp(48px, 9vw, 96px);
-  padding-bottom: 88px;
+  padding-top: clamp(32px, 6vw, 72px);
+  padding-bottom: clamp(56px, 8vw, 96px);
 }
 
 .hero-art {
@@ -21,25 +21,25 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 68%;
-  height: 82%;
+  width: 62%;
+  height: 90%;
   background: url("../assets/images/04_hero_classical_architecture.jpg") no-repeat top right / cover;
-  filter: grayscale(0.4) sepia(0.22) brightness(0.72) contrast(1.15);
-  -webkit-mask-image: linear-gradient(122deg, #000 32%, rgba(0, 0, 0, 0.45) 58%, transparent 86%);
-  mask-image: linear-gradient(122deg, #000 32%, rgba(0, 0, 0, 0.45) 58%, transparent 86%);
+  filter: grayscale(0.3) sepia(0.2) brightness(0.86) contrast(1.1);
+  -webkit-mask-image: linear-gradient(100deg, transparent 0%, rgba(0, 0, 0, 0.5) 14%, #000 32%);
+  mask-image: linear-gradient(100deg, transparent 0%, rgba(0, 0, 0, 0.5) 14%, #000 32%);
 }
 
 .hero-art-crest {
   position: absolute;
-  top: 3%;
+  top: 4%;
   left: 0;
-  width: 38%;
-  height: 54%;
+  width: 50%;
+  height: 64%;
   background: url("../assets/images/03_hero_crest_engraving.png") no-repeat left top / contain;
-  opacity: 0.65;
+  opacity: 0.88;
   mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(ellipse 62% 66% at 28% 32%, #000 45%, transparent 88%);
-  mask-image: radial-gradient(ellipse 62% 66% at 28% 32%, #000 45%, transparent 88%);
+  -webkit-mask-image: radial-gradient(ellipse 78% 82% at 30% 30%, #000 62%, transparent 96%);
+  mask-image: radial-gradient(ellipse 78% 82% at 30% 30%, #000 62%, transparent 96%);
 }
 
 .hero-art-texture {
@@ -47,7 +47,7 @@
   inset: 0;
   background: url("../assets/images/10_dark_filigree_texture.jpg") repeat;
   background-size: 700px;
-  opacity: 0.22;
+  opacity: 0.18;
   mix-blend-mode: overlay;
 }
 
@@ -55,74 +55,87 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 90% 60% at 50% 20%, rgba(5, 7, 12, 0.05) 0%, rgba(5, 7, 12, 0.55) 75%),
+    radial-gradient(ellipse 90% 55% at 50% 12%, rgba(5, 7, 12, 0.02) 0%, rgba(5, 7, 12, 0.4) 78%),
     linear-gradient(180deg,
-      rgba(7, 12, 23, 0.35) 0%,
-      rgba(7, 12, 23, 0.55) 34%,
-      rgba(7, 12, 23, 0.86) 60%,
-      var(--color-navy-deepest) 88%);
+      rgba(7, 12, 23, 0.18) 0%,
+      rgba(7, 12, 23, 0.4) 26%,
+      rgba(7, 12, 23, 0.78) 52%,
+      var(--color-navy-deepest) 82%);
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
-  max-width: 760px;
+  max-width: 860px;
   margin: 0 auto;
   text-align: center;
-  padding-top: clamp(220px, 34vw, 400px);
+  padding-top: clamp(190px, 26vw, 320px);
 }
 
 .hero-established {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 22px;
   color: var(--color-gold-bright);
   font-family: var(--font-serif);
-  font-size: 14px;
+  font-size: 15px;
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  margin-bottom: 22px;
+  margin-bottom: 24px;
 }
 
 .hero-established::before,
 .hero-established::after {
   content: "";
   height: 1px;
-  width: 64px;
+  width: clamp(48px, 9vw, 100px);
   background: linear-gradient(90deg, transparent, var(--color-gold) 50%, transparent);
 }
 
 .hero-title {
-  font-size: clamp(40px, 7vw, 74px);
-  line-height: 1.05;
-  letter-spacing: 0.01em;
+  font-size: clamp(40px, 9.6vw, 84px);
+  line-height: 1.04;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 850px) {
+  .hero-title .line-gold {
+    white-space: nowrap;
+  }
 }
 
 .hero-title .line-gold {
-  background: linear-gradient(180deg, #f1d9a0 0%, #cda257 55%, #92711f 100%);
+  background: linear-gradient(180deg, #f6e6b8 0%, #e2c07d 30%, #c9a24b 60%, #92711f 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .hero-title .line-cream {
+  display: inline-block;
+  margin-top: 0.08em;
+  font-size: 0.86em;
   color: var(--color-cream);
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .hero-subtitle {
   font-family: var(--font-caption);
   font-style: italic;
-  font-size: clamp(20px, 2.6vw, 26px);
-  color: var(--color-gold-bright);
-  margin-top: 18px;
+  font-weight: 600;
+  font-size: clamp(22px, 4vw, 38px);
+  color: #d3924a;
+  margin-top: 20px;
 }
 
 .hero-description {
   margin: 22px auto 0;
-  max-width: 620px;
-  font-size: 16.5px;
-  line-height: 1.85;
+  max-width: 700px;
+  font-size: clamp(16px, 2vw, 20px);
+  line-height: 1.62;
   color: var(--text-on-navy);
 }
 
@@ -130,9 +143,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 25px;
   flex-wrap: wrap;
-  margin-top: 38px;
+  margin-top: 40px;
 }
 
 /* ---------- ARCHIVAL FAMILY PHOTO ---------- */
@@ -146,17 +159,20 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: url("../assets/images/11_old_script_texture.jpg") no-repeat center / cover;
-  opacity: 0.06;
+  background:
+    url("../assets/images/11_old_script_texture.jpg") no-repeat left bottom / 46% auto,
+    url("../assets/images/13_old_map_texture.jpg") no-repeat right bottom / 40% auto;
+  opacity: 0.1;
   pointer-events: none;
 }
 
 .photo-frame {
   position: relative;
   max-width: 840px;
+  width: 90%;
   margin: 0 auto;
   border: 2px solid var(--color-gold);
-  border-radius: var(--radius-card);
+  border-radius: 20px;
   padding: 10px;
   background: var(--color-parchment-light);
   box-shadow: var(--shadow-soft);
@@ -165,8 +181,8 @@
 .photo-frame-inner {
   position: relative;
   overflow: hidden;
-  border-radius: 3px;
-  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  aspect-ratio: 1.86 / 1;
 }
 
 .photo-frame-inner img {
@@ -194,10 +210,12 @@
 }
 
 .photo-caption-top .cap-title {
-  font-family: var(--font-display);
-  font-size: 14px;
-  letter-spacing: 0.06em;
-  line-height: 1.4;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.55;
+  color: var(--color-gold-bright);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
@@ -228,11 +246,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
-  width: 78px;
-  height: 78px;
+  width: clamp(78px, 12vw, 118px);
+  height: clamp(78px, 12vw, 118px);
   border-radius: 50%;
-  border: 2px solid var(--color-gold);
-  background: rgba(10, 16, 28, 0.55);
+  border: 2px solid var(--color-gold-bright);
+  background: rgba(8, 13, 24, 0.5);
+  box-shadow: 0 0 0 6px rgba(8, 13, 24, 0.28), inset 0 0 0 1px rgba(226, 192, 125, 0.4), 0 10px 28px -8px rgba(0, 0, 0, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -248,21 +267,21 @@
 .play-button .triangle {
   width: 0;
   height: 0;
-  margin-left: 5px;
-  border-top: 13px solid transparent;
-  border-bottom: 13px solid transparent;
-  border-left: 20px solid var(--color-gold-bright);
+  margin-left: 6px;
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  border-left: 26px solid var(--color-gold-bright);
 }
 
 .wax-seal {
   position: absolute;
-  bottom: -34px;
-  right: -26px;
-  width: 96px;
-  height: 96px;
+  bottom: clamp(-64px, -6.5vw, -46px);
+  right: clamp(-38px, -3.6vw, -26px);
+  width: clamp(110px, 18vw, 182px);
+  height: clamp(110px, 18vw, 182px);
   z-index: 4;
-  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.45));
-  transform: rotate(-6deg);
+  filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.5)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+  transform: rotate(-5deg);
 }
 
 .homepage-tagline {
