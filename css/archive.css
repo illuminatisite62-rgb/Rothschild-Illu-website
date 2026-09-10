@@ -1,0 +1,203 @@
+/* ==========================================================================
+   Archive
+   ========================================================================== */
+
+.archive-hero {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  background: url("../assets/images/08_archive_books_globe.jpg") no-repeat center / cover;
+}
+
+.archive-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 7, 12, 0.75) 0%, rgba(5, 7, 12, 0.92) 100%);
+}
+
+.archive-hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  width: 100%;
+}
+
+.archive-section {
+  background: var(--color-parchment);
+  padding: 64px 0 100px;
+}
+
+.archive-filter-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.archive-filter-btn {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 9px 18px;
+  border: 1px solid var(--color-gold-deep);
+  border-radius: 30px;
+  background: transparent;
+  color: var(--color-sepia-dark);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.archive-filter-btn.active,
+.archive-filter-btn:hover {
+  background: var(--color-gold-deep);
+  color: var(--color-parchment-light);
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.archive-item {
+  position: relative;
+  background: var(--color-parchment-light);
+  border: 1px solid var(--color-parchment-dark);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s var(--ease-classic), box-shadow 0.25s var(--ease-classic);
+  cursor: pointer;
+}
+
+.archive-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-deep);
+}
+
+.archive-item-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--color-navy);
+  overflow: hidden;
+}
+
+.archive-item-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.35) contrast(1.05);
+}
+
+.archive-item-type {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(7, 12, 23, 0.75);
+  color: var(--color-gold-bright);
+  font-size: 10px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border: 1px solid var(--color-gold-line);
+  border-radius: 3px;
+}
+
+.archive-item-body {
+  padding: 16px 18px 20px;
+}
+
+.archive-item-title {
+  font-size: 16px;
+  color: var(--color-sepia-dark);
+  margin-bottom: 4px;
+}
+
+.archive-item-date {
+  font-family: var(--font-serif);
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-gold-deep);
+  margin-bottom: 8px;
+}
+
+.archive-item-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-on-parchment-muted);
+}
+
+.archive-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  font-family: var(--font-caption);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--text-on-parchment-muted);
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 7, 12, 0.9);
+  padding: 30px;
+}
+
+.lightbox[data-open="true"] {
+  display: flex;
+}
+
+.lightbox-inner {
+  position: relative;
+  max-width: 800px;
+  width: 100%;
+  background: var(--color-parchment-light);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-deep);
+}
+
+.lightbox-inner img {
+  width: 100%;
+  display: block;
+  filter: sepia(0.3);
+}
+
+.lightbox-caption {
+  padding: 20px 24px;
+}
+
+.lightbox-caption h3 {
+  font-size: 19px;
+  color: var(--color-sepia-dark);
+  margin-bottom: 6px;
+}
+
+.lightbox-caption p {
+  font-size: 14px;
+  color: var(--text-on-parchment-muted);
+  line-height: 1.6;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -46px;
+  right: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold-line);
+  background: transparent;
+  color: var(--color-gold-bright);
+  font-size: 20px;
+}

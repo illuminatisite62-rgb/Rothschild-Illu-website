@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Media Library | Admin | Rothschild Illuminati Organization</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="../assets/images/01_logo_emblem_transparent.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/variables.css" />
+<link rel="stylesheet" href="../css/global.css" />
+<link rel="stylesheet" href="../css/admin.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body class="admin-body" hidden>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-brand">
+      <span class="monogram" aria-hidden="true"><span class="monogram-letter">R</span></span>
+      <span class="admin-sidebar-brand-text">
+        <span class="name">ROTHSCHILD</span><br />
+        <span class="tag">Admin</span>
+      </span>
+    </div>
+    <nav class="admin-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="profiles.html">Family Profiles</a>
+      <a href="profile-editor.html">Add Profile</a>
+      <a href="media.html" class="active">Media Library</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="homepage.html">Homepage</a>
+      <a href="settings.html">Site Settings</a>
+    </nav>
+    <div class="admin-sidebar-foot">
+      <p class="admin-user-email" id="adminUserEmail"></p>
+      <button class="admin-logout-btn" id="adminLogoutBtn">Logout</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1 class="admin-page-title">Media Library</h1>
+        <p class="admin-page-desc">Upload portraits, gallery images and archive material to Supabase Storage.</p>
+      </div>
+    </div>
+
+    <div class="admin-panel">
+      <div class="admin-panel-heading">
+        <h2 id="uploadPanelTitle">Upload New File</h2>
+        <button type="button" class="row-actions" id="cancelEditBtn" hidden style="border:1px solid var(--color-parchment-dark); border-radius:4px; padding:6px 12px;">Cancel Edit</button>
+      </div>
+      <form id="mediaForm">
+        <input type="hidden" id="mediaId" />
+        <div class="upload-dropzone" id="dropzone">
+          <p id="dropzoneLabel">Click to choose a file, or drag one here.</p>
+          <p class="hint" id="fileNameLabel"></p>
+          <input type="file" id="fileInput" accept="image/*,video/*,.pdf" />
+        </div>
+        <div class="admin-form-row admin-form-row--3">
+          <div class="admin-form-field">
+            <label for="mediaBucket">Storage Bucket</label>
+            <select id="mediaBucket">
+              <option value="profile-images">profile-images</option>
+              <option value="gallery-images">gallery-images</option>
+              <option value="archive-media" selected>archive-media</option>
+            </select>
+          </div>
+          <div class="admin-form-field">
+            <label for="mediaType">Category</label>
+            <select id="mediaType">
+              <option>Photographs</option>
+              <option>Documents</option>
+              <option>Letters</option>
+              <option>Historical Records</option>
+              <option>Videos</option>
+              <option>Collections</option>
+            </select>
+          </div>
+          <div class="admin-form-field">
+            <label for="dateLabel">Date Label</label>
+            <input type="text" id="dateLabel" placeholder="e.g. c. 1890" />
+          </div>
+        </div>
+        <div class="admin-form-field">
+          <label for="mediaTitle">Title *</label>
+          <input type="text" id="mediaTitle" required />
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-field">
+            <label for="mediaCaption">Caption</label>
+            <input type="text" id="mediaCaption" />
+          </div>
+          <div class="admin-form-field">
+            <label for="mediaAltText">Alt Text</label>
+            <input type="text" id="mediaAltText" />
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-field">
+            <label for="mediaCredit">Credit</label>
+            <input type="text" id="mediaCredit" />
+          </div>
+          <div class="admin-form-field">
+            <label for="mediaSource">Source</label>
+            <input type="text" id="mediaSource" />
+          </div>
+        </div>
+        <div class="admin-form-field">
+          <label for="mediaDescription">Description</label>
+          <textarea id="mediaDescription" rows="3"></textarea>
+        </div>
+        <div class="admin-form-field">
+          <label><input type="checkbox" id="mediaPublished" style="width:auto; margin-right:8px;" /> Publish to the public Archive immediately</label>
+        </div>
+        <button type="submit" class="btn btn-gold" id="mediaSubmitBtn">Upload File</button>
+      </form>
+    </div>
+
+    <div class="admin-panel">
+      <div class="admin-panel-heading">
+        <h2>Library</h2>
+        <select id="libraryFilter" style="font-family: var(--font-serif); font-size: 13px; padding: 8px 12px; border: 1px solid var(--color-parchment-dark); border-radius: var(--radius-sm); background: var(--color-parchment);">
+          <option value="">All categories</option>
+          <option>Photographs</option>
+          <option>Documents</option>
+          <option>Letters</option>
+          <option>Historical Records</option>
+          <option>Videos</option>
+          <option>Collections</option>
+        </select>
+      </div>
+      <div class="media-grid" id="mediaGrid">
+        <p class="admin-empty">Loading&hellip;</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="admin-toast" id="adminToast"></div>
+
+<script src="../js/config.js"></script>
+<script src="../js/supabase-client.js" type="module"></script>
+<script src="../js/admin/media.js" type="module"></script>
+</body>
+</html>

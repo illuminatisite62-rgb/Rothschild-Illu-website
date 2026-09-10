@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Homepage | Admin | Rothschild Illuminati Organization</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="../assets/images/01_logo_emblem_transparent.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/variables.css" />
+<link rel="stylesheet" href="../css/global.css" />
+<link rel="stylesheet" href="../css/admin.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body class="admin-body" hidden>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-brand">
+      <span class="monogram" aria-hidden="true"><span class="monogram-letter">R</span></span>
+      <span class="admin-sidebar-brand-text">
+        <span class="name">ROTHSCHILD</span><br />
+        <span class="tag">Admin</span>
+      </span>
+    </div>
+    <nav class="admin-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="profiles.html">Family Profiles</a>
+      <a href="profile-editor.html">Add Profile</a>
+      <a href="media.html">Media Library</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="homepage.html" class="active">Homepage</a>
+      <a href="settings.html">Site Settings</a>
+    </nav>
+    <div class="admin-sidebar-foot">
+      <p class="admin-user-email" id="adminUserEmail"></p>
+      <button class="admin-logout-btn" id="adminLogoutBtn">Logout</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1 class="admin-page-title">Homepage Content</h1>
+        <p class="admin-page-desc">Edit homepage copy. This only changes text and links — the visual layout is fixed.</p>
+      </div>
+      <a href="../index.html" target="_blank" rel="noopener" class="btn btn-outline-gold">View Homepage &rsaquo;</a>
+    </div>
+
+    <form id="homepageForm">
+      <div class="admin-panel">
+        <div class="admin-panel-heading"><h2>Hero</h2></div>
+        <div class="admin-form-field">
+          <label for="heroEstablishedText">Established Text</label>
+          <input type="text" id="heroEstablishedText" />
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-field">
+            <label for="heroLine1">Heading — Line 1</label>
+            <input type="text" id="heroLine1" />
+          </div>
+          <div class="admin-form-field">
+            <label for="heroLine2">Heading — Line 2</label>
+            <input type="text" id="heroLine2" />
+          </div>
+        </div>
+        <div class="admin-form-field">
+          <label for="heroSubtitle">Subtitle</label>
+          <input type="text" id="heroSubtitle" />
+        </div>
+        <div class="admin-form-field">
+          <label for="heroDescription">Description</label>
+          <textarea id="heroDescription" rows="3"></textarea>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-field">
+            <label for="btnPrimaryText">Primary Button Text</label>
+            <input type="text" id="btnPrimaryText" />
+          </div>
+          <div class="admin-form-field">
+            <label for="btnPrimaryUrl">Primary Button Link</label>
+            <input type="text" id="btnPrimaryUrl" />
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-field">
+            <label for="btnSecondaryText">Secondary Button Text</label>
+            <input type="text" id="btnSecondaryText" />
+          </div>
+          <div class="admin-form-field">
+            <label for="btnSecondaryUrl">Secondary Button Link</label>
+            <input type="text" id="btnSecondaryUrl" />
+          </div>
+        </div>
+        <div class="admin-form-field">
+          <label for="videoUrl">Archival Video URL</label>
+          <input type="text" id="videoUrl" placeholder="https://…" />
+          <span class="hint">If set, the play button on the family photo links here.</span>
+        </div>
+      </div>
+
+      <div class="admin-panel">
+        <div class="admin-panel-heading"><h2>Archival Photo Section</h2></div>
+        <div class="admin-form-field">
+          <label for="archivalCaptionTop">Overlay Caption (Top)</label>
+          <input type="text" id="archivalCaptionTop" />
+        </div>
+        <div class="admin-form-field">
+          <label for="archivalCaptionBottom">Overlay Caption (Bottom)</label>
+          <input type="text" id="archivalCaptionBottom" />
+        </div>
+        <div class="admin-form-field">
+          <label for="taglineText">Tagline Bar</label>
+          <input type="text" id="taglineText" />
+        </div>
+      </div>
+
+      <div class="admin-panel">
+        <div class="admin-panel-heading"><h2>Featured Profiles, Timeline &amp; Archive Previews</h2></div>
+        <p class="hint" style="display:block;">These sections pull live from your data rather than fixed text:</p>
+        <ul style="margin: 12px 0 0 20px; font-size: 14px; line-height: 2; color: var(--text-on-parchment-muted);">
+          <li>Featured Profiles — mark a profile "Featured" in <a href="profiles.html">Family Profiles</a>.</li>
+          <li>Timeline Preview — shows the first published entries from <a href="timeline.html">Timeline</a>.</li>
+          <li>Archive Preview — links to the public <a href="../archive.html" target="_blank" rel="noopener">Archive</a> page.</li>
+        </ul>
+      </div>
+
+      <div class="admin-panel">
+        <div class="admin-panel-heading"><h2>Footer</h2></div>
+        <div class="admin-form-field">
+          <label for="footerAboutText">Footer About Text</label>
+          <textarea id="footerAboutText" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="editor-actions">
+        <button type="submit" class="btn btn-gold">Save Changes</button>
+      </div>
+    </form>
+  </main>
+</div>
+
+<div class="admin-toast" id="adminToast"></div>
+
+<script src="../js/config.js"></script>
+<script src="../js/supabase-client.js" type="module"></script>
+<script src="../js/admin/homepage.js" type="module"></script>
+</body>
+</html>

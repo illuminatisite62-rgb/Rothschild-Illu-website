@@ -1,0 +1,62 @@
+/* ==========================================================================
+   Rothschild Illuminati Organization — Design Tokens
+   Ancient European historical archive aesthetic:
+   deep navy, black, antique gold, parchment, sepia.
+   ========================================================================== */
+
+:root {
+  /* Core palette */
+  --color-navy-deepest: #070c17;
+  --color-navy-deep: #0d1830;
+  --color-navy: #142449;
+  --color-navy-light: #1f2f57;
+  --color-black: #05070c;
+
+  --color-gold: #c9a24b;
+  --color-gold-bright: #e2c07d;
+  --color-gold-deep: #9c7a2e;
+  --color-gold-line: rgba(201, 162, 75, 0.55);
+
+  --color-parchment: #e9dfc6;
+  --color-parchment-light: #f3ead4;
+  --color-parchment-dark: #d8c9a3;
+
+  --color-sepia: #4a3a22;
+  --color-sepia-dark: #2c2011;
+  --color-sepia-light: #7a6440;
+
+  --color-cream: #f4ecd8;
+  --color-wax-red: #7a1620;
+
+  --color-ink: #1a1408;
+
+  /* Text colors */
+  --text-on-navy: var(--color-cream);
+  --text-on-navy-muted: #b9ac8c;
+  --text-on-parchment: var(--color-sepia-dark);
+  --text-on-parchment-muted: #6b5a3c;
+
+  /* Typography */
+  --font-display: "Playfair Display", "Times New Roman", serif;
+  --font-serif: "EB Garamond", "Georgia", serif;
+  --font-caption: "Cormorant Garamond", "Georgia", serif;
+
+  --tracking-wide: 0.14em;
+  --tracking-wider: 0.28em;
+  --tracking-widest: 0.4em;
+
+  /* Layout */
+  --container-max: 1240px;
+  --container-narrow: 860px;
+  --header-height: 108px;
+  --header-height-mobile: 84px;
+
+  /* Effects */
+  --shadow-deep: 0 30px 60px -20px rgba(0, 0, 0, 0.65);
+  --shadow-soft: 0 14px 34px -12px rgba(30, 20, 5, 0.35);
+  --shadow-inset-gold: inset 0 0 0 1px rgba(201, 162, 75, 0.4);
+  --radius-card: 6px;
+  --radius-sm: 3px;
+
+  --ease-classic: cubic-bezier(0.22, 0.61, 0.36, 1);
+}

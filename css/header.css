@@ -1,0 +1,286 @@
+/* ==========================================================================
+   Header & Navigation Drawer
+   ========================================================================== */
+
+.site-header {
+  position: relative;
+  z-index: 100;
+  background:
+    linear-gradient(120deg, var(--color-navy-deepest) 0%, var(--color-navy) 46%, var(--color-parchment-dark) 100%);
+  border-bottom: 2px solid var(--color-gold-deep);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: var(--header-height);
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+/* Brand block */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.monogram {
+  flex-shrink: 0;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: radial-gradient(circle at 35% 30%, rgba(226, 192, 125, 0.18), transparent 70%);
+}
+
+.monogram::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(201, 162, 75, 0.4);
+  border-radius: 50%;
+}
+
+.monogram-letter {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-gold-bright);
+  background: linear-gradient(180deg, #f1d9a0 0%, #c9a24b 55%, #8a691f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-cream);
+  white-space: nowrap;
+}
+
+.brand-subtitle {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-gold);
+  white-space: nowrap;
+}
+
+/* Right-side tagline nav */
+.header-tagline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--font-caption);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.35;
+  color: var(--color-sepia);
+  text-align: right;
+}
+
+.header-tagline span {
+  white-space: nowrap;
+}
+
+/* Hamburger */
+.hamburger {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold-line);
+  background: rgba(7, 12, 23, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.hamburger:hover {
+  background: rgba(7, 12, 23, 0.6);
+  border-color: var(--color-gold);
+}
+
+.hamburger .bar {
+  width: 20px;
+  height: 1.5px;
+  background: var(--color-gold-bright);
+  transition: transform 0.25s var(--ease-classic), opacity 0.2s ease;
+}
+
+.hamburger[aria-expanded="true"] .bar:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.hamburger[aria-expanded="true"] .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger[aria-expanded="true"] .bar:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* Navigation Drawer */
+.nav-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.nav-drawer[data-open="true"] {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.nav-drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 7, 12, 0.6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nav-drawer[data-open="true"] .nav-drawer-backdrop {
+  opacity: 1;
+}
+
+.nav-drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(380px, 88vw);
+  background: linear-gradient(180deg, var(--color-navy-deepest) 0%, var(--color-navy-deep) 100%);
+  border-left: 2px solid var(--color-gold-deep);
+  transform: translateX(100%);
+  transition: transform 0.35s var(--ease-classic);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 30px 40px;
+  box-shadow: var(--shadow-deep);
+}
+
+.nav-drawer[data-open="true"] .nav-drawer-panel {
+  transform: translateX(0);
+}
+
+.nav-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(201, 162, 75, 0.25);
+}
+
+.nav-drawer-header .brand-name {
+  font-size: 19px;
+}
+
+.nav-drawer-close {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold-line);
+  background: transparent;
+  color: var(--color-gold-bright);
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-drawer-close:hover {
+  background: rgba(201, 162, 75, 0.12);
+}
+
+.nav-drawer-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-drawer-links li + li {
+  border-top: 1px solid rgba(201, 162, 75, 0.12);
+}
+
+.nav-drawer-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 4px;
+  font-family: var(--font-display);
+  font-size: 19px;
+  color: var(--color-cream);
+  letter-spacing: 0.03em;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.nav-drawer-links a:hover,
+.nav-drawer-links a.active {
+  color: var(--color-gold-bright);
+  padding-left: 10px;
+}
+
+.nav-drawer-links a .arrow {
+  font-family: var(--font-serif);
+  color: var(--color-gold-deep);
+  font-size: 16px;
+}
+
+.nav-drawer-admin {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(201, 162, 75, 0.25);
+}
+
+.nav-drawer-admin a {
+  display: block;
+  text-align: center;
+  padding: 14px 20px;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-navy-deepest);
+  background: linear-gradient(180deg, #dcb768 0%, #b78a37 100%);
+  border-radius: var(--radius-sm);
+}
+
+.nav-drawer-foot {
+  margin-top: auto;
+  padding-top: 24px;
+  font-family: var(--font-caption);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--text-on-navy-muted);
+  text-align: center;
+}
+
+body.nav-open {
+  overflow: hidden;
+}

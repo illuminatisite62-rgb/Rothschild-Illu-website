@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Profile Editor | Admin | Rothschild Illuminati Organization</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="../assets/images/01_logo_emblem_transparent.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/variables.css" />
+<link rel="stylesheet" href="../css/global.css" />
+<link rel="stylesheet" href="../css/admin.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body class="admin-body" hidden>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-brand">
+      <span class="monogram" aria-hidden="true"><span class="monogram-letter">R</span></span>
+      <span class="admin-sidebar-brand-text">
+        <span class="name">ROTHSCHILD</span><br />
+        <span class="tag">Admin</span>
+      </span>
+    </div>
+    <nav class="admin-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="profiles.html" class="active">Family Profiles</a>
+      <a href="profile-editor.html">Add Profile</a>
+      <a href="media.html">Media Library</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="homepage.html">Homepage</a>
+      <a href="settings.html">Site Settings</a>
+    </nav>
+    <div class="admin-sidebar-foot">
+      <p class="admin-user-email" id="adminUserEmail"></p>
+      <button class="admin-logout-btn" id="adminLogoutBtn">Logout</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1 class="admin-page-title" id="editorTitle">Add Profile</h1>
+        <p class="admin-page-desc">Fields left empty will simply not be shown on the public biography page.</p>
+      </div>
+    </div>
+
+    <form id="profileForm">
+      <div class="editor-layout">
+        <div class="editor-tabs" role="tablist">
+          <button type="button" class="editor-tab-btn active" data-tab="basic">Basic Information</button>
+          <button type="button" class="editor-tab-btn" data-tab="biography">Biography</button>
+          <button type="button" class="editor-tab-btn" data-tab="family">Family</button>
+          <button type="button" class="editor-tab-btn" data-tab="achievements">Achievements</button>
+          <button type="button" class="editor-tab-btn" data-tab="media">Media</button>
+          <button type="button" class="editor-tab-btn" data-tab="sources">Sources</button>
+          <button type="button" class="editor-tab-btn" data-tab="seo">SEO</button>
+          <button type="button" class="editor-tab-btn" data-tab="publishing">Publishing</button>
+        </div>
+
+        <div class="editor-panels">
+
+          <!-- BASIC INFORMATION -->
+          <section class="editor-tab-panel active" data-panel="basic">
+            <div class="admin-panel">
+              <div class="admin-form-row">
+                <div class="admin-form-field">
+                  <label for="fullName">Full Name *</label>
+                  <input type="text" id="fullName" required />
+                </div>
+                <div class="admin-form-field">
+                  <label for="slug">Slug *</label>
+                  <input type="text" id="slug" required pattern="[a-z0-9-]+" />
+                  <span class="hint">Used in the profile URL. Lowercase letters, numbers and hyphens only.</span>
+                </div>
+              </div>
+              <div class="admin-form-field">
+                <label for="alternativeNames">Alternative Names</label>
+                <input type="text" id="alternativeNames" />
+              </div>
+              <div class="admin-form-row">
+                <div class="admin-form-field">
+                  <label for="birthDate">Birth Date</label>
+                  <input type="date" id="birthDate" />
+                </div>
+                <div class="admin-form-field">
+                  <label for="deathDate">Death Date</label>
+                  <input type="date" id="deathDate" />
+                </div>
+              </div>
+              <div class="admin-form-row">
+                <div class="admin-form-field">
+                  <label for="birthPlace">Birthplace</label>
+                  <input type="text" id="birthPlace" />
+                </div>
+                <div class="admin-form-field">
+                  <label for="deathPlace">Death Place</label>
+                  <input type="text" id="deathPlace" />
+                </div>
+              </div>
+              <div class="admin-form-row admin-form-row--3">
+                <div class="admin-form-field">
+                  <label for="nationality">Nationality</label>
+                  <input type="text" id="nationality" />
+                </div>
+                <div class="admin-form-field">
+                  <label for="familyBranch">Family Branch</label>
+                  <input type="text" id="familyBranch" placeholder="e.g. London" />
+                </div>
+                <div class="admin-form-field">
+                  <label for="occupation">Occupation</label>
+                  <input type="text" id="occupation" />
+                </div>
+              </div>
+              <div class="admin-form-field">
+                <label for="titles">Titles</label>
+                <input type="text" id="titles" />
+              </div>
+              <div class="admin-form-row">
+                <div class="admin-form-field">
+                  <label for="portraitUrl">Portrait URL</label>
+                  <img id="portraitPreview" class="thumb-preview" src="../assets/images/05_archival_family_photo.jpg" alt="" hidden />
+                  <input type="text" id="portraitUrl" placeholder="assets/images/... or a Storage URL" />
+                  <span class="hint">Upload the file in the Media Library, then paste its URL here.</span>
+                </div>
+                <div class="admin-form-field">
+                  <label for="coverImageUrl">Cover Image URL</label>
+                  <input type="text" id="coverImageUrl" placeholder="assets/images/... or a Storage URL" />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- BIOGRAPHY -->
+          <section class="editor-tab-panel" data-panel="biography">
+            <div class="admin-panel">
+              <div class="admin-form-field">
+                <label for="shortBio">Short Biography</label>
+                <textarea id="shortBio" rows="3"></textarea>
+                <span class="hint">Used in directory cards and homepage previews.</span>
+              </div>
+              <div class="admin-form-field">
+                <label for="fullBio">Full Biography</label>
+                <textarea id="fullBio" rows="6"></textarea>
+              </div>
+              <div class="admin-form-field">
+                <label for="earlyLife">Early Life</label>
+                <textarea id="earlyLife" rows="4"></textarea>
+              </div>
+              <div class="admin-form-field">
+                <label for="familyBackground">Family Background</label>
+                <textarea id="familyBackground" rows="4"></textarea>
+              </div>
+              <div class="admin-form-field">
+                <label for="education">Education</label>
+                <textarea id="education" rows="3"></textarea>
+              </div>
+              <div class="admin-form-field">
+                <label for="career">Career</label>
+                <textarea id="career" rows="4"></textarea>
+              </div>
+              <div class="admin-form-field">
+                <label for="businessActivities">Business Activities</label>
+                <textarea id="businessActivities" rows="4"></textarea>
+              </div>
+              <div class="admin-form-field">
+                <label for="historicalContext">Historical Context</label>
+                <textarea id="historicalContext" rows="4"></textarea>
+                <span class="hint">Note clearly if any claim here is disputed or unverified.</span>
+              </div>
+              <div class="admin-form-field">
+                <label for="personalLife">Personal Life</label>
+                <textarea id="personalLife" rows="4"></textarea>
+              </div>
+            </div>
+          </section>
+
+          <!-- FAMILY -->
+          <section class="editor-tab-panel" data-panel="family">
+            <div class="admin-panel">
+              <div class="admin-panel-heading">
+                <h2>Family Relationships</h2>
+                <button type="button" class="btn btn-outline-gold" id="addRelationshipBtn">+ Add Relationship</button>
+              </div>
+              <p class="hint" style="margin-bottom: 16px; display: block;">Link this profile to other profiles already in the archive. Save the profile once first if it's brand new.</p>
+              <div id="relationshipsList"></div>
+            </div>
+          </section>
+
+          <!-- ACHIEVEMENTS -->
+          <section class="editor-tab-panel" data-panel="achievements">
+            <div class="admin-panel">
+              <div class="admin-form-field">
+                <label for="achievements">Achievements</label>
+                <textarea id="achievements" rows="4"></textarea>
+              </div>
+              <div class="admin-form-field">
+                <label for="philanthropy">Philanthropy</label>
+                <textarea id="philanthropy" rows="4"></textarea>
+              </div>
+              <div class="admin-form-field">
+                <label for="legacy">Legacy</label>
+                <textarea id="legacy" rows="4"></textarea>
+              </div>
+              <div class="admin-form-field">
+                <label for="interestingFacts">Interesting Facts</label>
+                <textarea id="interestingFacts" rows="4"></textarea>
+              </div>
+              <div class="admin-form-field">
+                <label for="quotes">Quotes</label>
+                <textarea id="quotes" rows="3"></textarea>
+                <span class="hint">Only include quotes that are reliably documented; note uncertain attribution explicitly.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- MEDIA -->
+          <section class="editor-tab-panel" data-panel="media">
+            <div class="admin-panel">
+              <div class="admin-panel-heading">
+                <h2>Photo Gallery</h2>
+                <button type="button" class="btn btn-outline-gold" id="addGalleryImageBtn">+ Add Image</button>
+              </div>
+              <p class="hint" style="margin-bottom: 16px; display: block;">Upload files in the Media Library first, then paste their URLs here.</p>
+              <div id="galleryList"></div>
+            </div>
+          </section>
+
+          <!-- SOURCES -->
+          <section class="editor-tab-panel" data-panel="sources">
+            <div class="admin-panel">
+              <div class="admin-panel-heading">
+                <h2>Sources &amp; References</h2>
+                <button type="button" class="btn btn-outline-gold" id="addSourceBtn">+ Add Source</button>
+              </div>
+              <div id="sourcesList"></div>
+            </div>
+          </section>
+
+          <!-- SEO -->
+          <section class="editor-tab-panel" data-panel="seo">
+            <div class="admin-panel">
+              <div class="admin-form-field">
+                <label for="seoTitle">SEO Title</label>
+                <input type="text" id="seoTitle" />
+              </div>
+              <div class="admin-form-field">
+                <label for="seoDescription">SEO Description</label>
+                <textarea id="seoDescription" rows="3"></textarea>
+              </div>
+            </div>
+          </section>
+
+          <!-- PUBLISHING -->
+          <section class="editor-tab-panel" data-panel="publishing">
+            <div class="admin-panel">
+              <div class="admin-form-field">
+                <label><input type="checkbox" id="featured" style="width: auto; margin-right: 8px;" /> Featured on Homepage</label>
+              </div>
+              <div class="admin-form-field">
+                <label for="statusDisplay">Current Status</label>
+                <input type="text" id="statusDisplay" value="Draft" readonly />
+              </div>
+              <div class="admin-form-field">
+                <label for="publishedAtDisplay">Published Date</label>
+                <input type="text" id="publishedAtDisplay" value="Not yet published" readonly />
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <div class="editor-actions">
+        <a href="profiles.html" class="btn btn-outline-gold">Cancel</a>
+        <button type="button" class="btn btn-outline-navy" id="previewBtn">Preview</button>
+        <button type="submit" class="btn btn-outline-gold" id="saveDraftBtn" data-status="draft">Save Draft</button>
+        <button type="submit" class="btn btn-gold" id="publishBtn" data-status="published">Publish</button>
+      </div>
+    </form>
+  </main>
+</div>
+
+<div class="admin-toast" id="adminToast"></div>
+
+<script src="../js/config.js"></script>
+<script src="../js/supabase-client.js" type="module"></script>
+<script src="../js/admin/profile-editor.js" type="module"></script>
+</body>
+</html>

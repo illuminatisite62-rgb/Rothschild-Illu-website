@@ -1,0 +1,213 @@
+/* ==========================================================================
+   Family Directory
+   ========================================================================== */
+
+.directory-section {
+  background: var(--color-parchment);
+  padding: 56px 0 96px;
+}
+
+.directory-toolbar {
+  background: var(--color-parchment-light);
+  border: 1px solid var(--color-parchment-dark);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  padding: 26px 28px;
+  margin-bottom: 42px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: flex-end;
+}
+
+.toolbar-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.toolbar-field label {
+  font-family: var(--font-serif);
+  font-size: 11.5px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-gold-deep);
+}
+
+.toolbar-field input[type="search"],
+.toolbar-field select {
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  color: var(--text-on-parchment);
+  background: var(--color-parchment);
+  border: 1px solid var(--color-parchment-dark);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  min-width: 168px;
+}
+
+.toolbar-field input[type="search"]:focus,
+.toolbar-field select:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.toolbar-field--search {
+  flex: 1 1 260px;
+}
+
+.toolbar-field--search input {
+  width: 100%;
+}
+
+.toolbar-reset {
+  align-self: flex-end;
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-sepia-dark);
+  border-bottom: 1px solid var(--color-gold);
+  padding-bottom: 3px;
+  height: fit-content;
+}
+
+.directory-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-family: var(--font-serif);
+  font-size: 13.5px;
+  color: var(--text-on-parchment-muted);
+}
+
+.directory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.profile-card {
+  background: var(--color-parchment-light);
+  border: 1px solid var(--color-parchment-dark);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s var(--ease-classic), box-shadow 0.25s var(--ease-classic);
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-deep);
+}
+
+.profile-card-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background: var(--color-navy);
+  overflow: hidden;
+}
+
+.profile-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.4) contrast(1.05);
+}
+
+.profile-card-branch {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(7, 12, 23, 0.75);
+  color: var(--color-gold-bright);
+  font-size: 10px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border: 1px solid var(--color-gold-line);
+  border-radius: 3px;
+}
+
+.profile-card-featured {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(7, 12, 23, 0.75);
+  border: 1px solid var(--color-gold-line);
+  color: var(--color-gold-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.profile-card-body {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.profile-card-name {
+  font-size: 19px;
+  color: var(--color-sepia-dark);
+  margin-bottom: 3px;
+}
+
+.profile-card-life {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-gold-deep);
+  margin-bottom: 4px;
+}
+
+.profile-card-role {
+  font-family: var(--font-caption);
+  font-style: italic;
+  font-size: 14.5px;
+  color: var(--text-on-parchment-muted);
+  margin-bottom: 12px;
+}
+
+.profile-card-bio {
+  font-size: 13.8px;
+  line-height: 1.65;
+  color: var(--text-on-parchment-muted);
+  margin-bottom: 18px;
+  flex: 1;
+}
+
+.profile-card-link {
+  align-self: flex-start;
+  font-family: var(--font-serif);
+  font-size: 12px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-sepia-dark);
+  border-bottom: 1px solid var(--color-gold);
+  padding-bottom: 2px;
+}
+
+.directory-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  font-family: var(--font-caption);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--text-on-parchment-muted);
+}
+
+.directory-load-more {
+  text-align: center;
+  margin-top: 46px;
+}

@@ -1,0 +1,160 @@
+/* ==========================================================================
+   History / Timeline
+   ========================================================================== */
+
+.timeline-section {
+  position: relative;
+  background: var(--color-parchment);
+  padding: 80px 0 100px;
+}
+
+.timeline-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/images/13_old_map_texture.jpg") repeat;
+  background-size: 1100px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.timeline-filter-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+
+.timeline-filter-btn {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 9px 18px;
+  border: 1px solid var(--color-gold-deep);
+  border-radius: 30px;
+  background: transparent;
+  color: var(--color-sepia-dark);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.timeline-filter-btn.active,
+.timeline-filter-btn:hover {
+  background: var(--color-gold-deep);
+  color: var(--color-parchment-light);
+}
+
+.timeline-rail {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.timeline-rail::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, var(--color-gold-line) 6%, var(--color-gold-line) 94%, transparent);
+}
+
+.timeline-event {
+  position: relative;
+  width: 50%;
+  padding: 0 48px 64px;
+}
+
+.timeline-event:nth-child(odd) {
+  left: 0;
+  text-align: right;
+}
+
+.timeline-event:nth-child(even) {
+  left: 50%;
+  text-align: left;
+}
+
+.timeline-event::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--color-parchment);
+  border: 3px solid var(--color-gold);
+  z-index: 1;
+}
+
+.timeline-event:nth-child(odd)::before {
+  right: -8px;
+}
+
+.timeline-event:nth-child(even)::before {
+  left: -8px;
+}
+
+.timeline-card {
+  display: inline-block;
+  background: var(--color-parchment-light);
+  border: 1px solid var(--color-parchment-dark);
+  border-radius: var(--radius-card);
+  padding: 22px 26px;
+  box-shadow: var(--shadow-soft);
+  max-width: 420px;
+  text-align: left;
+}
+
+.timeline-card-year {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--color-gold-deep);
+  margin-bottom: 6px;
+}
+
+.timeline-card-category {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: 10.5px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-navy);
+  background: rgba(20, 36, 73, 0.08);
+  border: 1px solid rgba(20, 36, 73, 0.2);
+  border-radius: 3px;
+  padding: 3px 9px;
+  margin-bottom: 10px;
+}
+
+.timeline-card-title {
+  font-size: 19px;
+  color: var(--color-sepia-dark);
+  margin-bottom: 10px;
+}
+
+.timeline-card img {
+  width: 100%;
+  border-radius: 3px;
+  margin-bottom: 12px;
+  filter: sepia(0.3);
+}
+
+.timeline-card-desc {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text-on-parchment-muted);
+}
+
+.timeline-empty {
+  text-align: center;
+  padding: 60px 20px;
+  font-family: var(--font-caption);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--text-on-parchment-muted);
+}
