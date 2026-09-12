@@ -8,7 +8,7 @@
   background: var(--color-navy-deepest);
   overflow: hidden;
   padding-top: clamp(32px, 6vw, 72px);
-  padding-bottom: clamp(40px, 5vw, 64px);
+  padding-bottom: clamp(10px, 1.5vw, 20px);
 }
 
 .hero-art {
@@ -152,7 +152,7 @@
 .archival-section {
   position: relative;
   background: var(--color-parchment);
-  padding: 44px 0 40px;
+  padding: 20px 0 40px;
 }
 
 /* Subtle overall paper-grain wash. A single non-repeating cover-sized layer

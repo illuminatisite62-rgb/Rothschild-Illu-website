@@ -1,0 +1,713 @@
+/* ==========================================================================
+   Homepage v3 — Master reference correction pass (2026-09-11)
+   Load order: AFTER variables → global → header → homepage → responsive
+   Scope: homepage (index.html) only.
+   ========================================================================== */
+
+/* ============================================================
+   0. BODY BASE — prevent side-scroll; match hero color at edges
+   ============================================================ */
+body {
+  overflow-x: hidden;
+  /* Match the hero's deep navy so edge bleeds are invisible */
+  background: #070c17;
+}
+
+/* ============================================================
+   1. HEADER — floats over hero artwork, no hard separation
+   ============================================================ */
+.site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  /* Semi-transparent gradient — artwork shows through below */
+  background: linear-gradient(
+    180deg,
+    rgba(5, 7, 12, 0.88) 0%,
+    rgba(5, 7, 12, 0.60) 60%,
+    rgba(5, 7, 12, 0.05) 100%
+  );
+  border-bottom: none;
+  box-shadow: none;
+  overflow: visible;
+}
+
+/* Suppress old script-texture overlay on header */
+.site-header::after {
+  display: none;
+}
+
+.site-header .container {
+  position: relative;
+  z-index: 1;
+  min-height: clamp(96px, 13vw, 144px);
+  padding-top: 16px;
+  padding-bottom: 16px;
+  align-items: center;
+}
+
+/* ── Brand R monogram ──────────────────────────────────────── */
+.site-header .monogram-letter {
+  font-size: clamp(68px, 10.5vw, 112px);
+  line-height: 0.76;
+  filter: drop-shadow(0 3px 7px rgba(0, 0, 0, 0.65));
+}
+
+/* ── ROTHSCHILD wordmark ───────────────────────────────────── */
+.site-header .brand-name {
+  font-size: clamp(20px, 2.7vw, 28px);
+  letter-spacing: 0.28em;
+  color: var(--color-cream);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
+}
+
+/* ── ILLUMINATI ORGANIZATION subtitle ─────────────────────── */
+.site-header .brand-subtitle {
+  font-size: 10.5px;
+  letter-spacing: 0.34em;
+  color: var(--color-gold-bright);
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.55);
+  text-transform: uppercase;
+}
+
+/* ── History / Shapes / Tomorrow tagline ──────────────────── */
+.header-tagline {
+  font-size: 17px;
+  color: rgba(190, 150, 75, 0.9);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+/* ── Hamburger ─────────────────────────────────────────────── */
+.hamburger {
+  background: rgba(5, 8, 18, 0.5);
+  border-color: rgba(201, 162, 75, 0.65);
+}
+
+/* ============================================================
+   2. HERO SECTION — full-bleed from top, artwork fills everything
+   ============================================================ */
+
+/* hero starts at absolute top-0 because header is positioned over it */
+.hero {
+  position: relative;
+  padding-top: 0;
+  padding-bottom: 0;
+  /* Height driven by content + padding-top on hero-content */
+  min-height: 0;
+  height: auto;
+  overflow: hidden;
+  /* Remove old flex that was adding empty space at bottom */
+  display: block;
+  background: var(--color-navy-deepest);
+}
+
+/* ── Art container fills 100% of hero ────────────────────── */
+.hero-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ── RIGHT: Classical architecture ───────────────────────── */
+.hero-art-arch {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 65%;
+  height: 100%;
+  background: url("../assets/images/04_hero_classical_architecture.jpg")
+    no-repeat top right / cover;
+  filter: grayscale(0.1) sepia(0.3) brightness(0.78) contrast(1.12);
+  -webkit-mask-image: linear-gradient(
+    102deg,
+    transparent 0%,
+    transparent 14%,
+    rgba(0, 0, 0, 0.18) 22%,
+    rgba(0, 0, 0, 0.65) 32%,
+    #000 44%
+  );
+  mask-image: linear-gradient(
+    102deg,
+    transparent 0%,
+    transparent 14%,
+    rgba(0, 0, 0, 0.18) 22%,
+    rgba(0, 0, 0, 0.65) 32%,
+    #000 44%
+  );
+}
+
+/* ── LEFT: Heraldic crest ─────────────────────────────────── */
+.hero-art-crest {
+  position: absolute;
+  top: 0;
+  left: -1%;
+  width: 64%;
+  height: 75%;
+  background: url("../assets/images/03_hero_crest_engraving.png")
+    no-repeat left top / contain;
+  opacity: 0.96;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 84% at 30% 28%,
+    #000 52%,
+    rgba(0, 0, 0, 0.55) 70%,
+    transparent 88%
+  );
+  mask-image: radial-gradient(
+    ellipse 80% 84% at 30% 28%,
+    #000 52%,
+    rgba(0, 0, 0, 0.55) 70%,
+    transparent 88%
+  );
+}
+
+/* ── CENTER: Faded architectural depth layer ──────────────── */
+.hero-art-texture {
+  position: absolute;
+  top: 0;
+  left: 14%;
+  right: 14%;
+  height: 58%;
+  background: url("../assets/images/14_faded_architecture_texture.jpg")
+    no-repeat center top / cover;
+  opacity: 0.16;
+  mix-blend-mode: screen;
+}
+
+/* ── Atmospheric overlay — darkens edges + bottom ─────────── */
+.hero-art-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    /* Edge vignette */
+    radial-gradient(
+      ellipse 115% 55% at 50% 10%,
+      transparent 15%,
+      rgba(5, 7, 12, 0.28) 65%
+    ),
+    /* Bottom fade to solid navy for text readability */
+    linear-gradient(
+      180deg,
+      rgba(7, 12, 23, 0.06) 0%,
+      rgba(7, 12, 23, 0.12) 18%,
+      rgba(7, 12, 23, 0.50) 52%,
+      rgba(7, 12, 23, 0.88) 76%,
+      var(--color-navy-deepest) 93%
+    );
+}
+
+/* ── Torn parchment edge at hero bottom ───────────────────── */
+/* Uses an inline SVG mask to create an irregular torn-page silhouette.
+   The parchment color bleeds up from below via this shape. */
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: clamp(44px, 5.5vw, 68px);
+  z-index: 3;
+  pointer-events: none;
+  background: var(--color-parchment-light);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 68' preserveAspectRatio='none'%3E%3Cpath d='M0,68 L0,36 C36,24 72,42 108,30 C144,18 180,38 216,26 C252,14 288,34 324,22 C360,10 396,30 432,20 C468,10 504,32 540,22 C576,12 612,34 648,22 C684,10 720,30 756,18 C792,6 828,28 864,16 C900,4 936,26 972,14 C1008,2 1044,24 1080,14 C1116,4 1152,26 1188,16 C1224,6 1260,28 1296,18 C1332,8 1368,30 1404,18 L1440,12 L1440,68 Z' fill='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 68' preserveAspectRatio='none'%3E%3Cpath d='M0,68 L0,36 C36,24 72,42 108,30 C144,18 180,38 216,26 C252,14 288,34 324,22 C360,10 396,30 432,20 C468,10 504,32 540,22 C576,12 612,34 648,22 C684,10 720,30 756,18 C792,6 828,28 864,16 C900,4 936,26 972,14 C1008,2 1044,24 1080,14 C1116,4 1152,26 1188,16 C1224,6 1260,28 1296,18 C1332,8 1368,30 1404,18 L1440,12 L1440,68 Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* ============================================================
+   3. HERO CONTENT — artwork fills top; text content sits lower
+   ============================================================ */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+  /* Artwork fills this top area; text sits in the lower portion */
+  padding-top: clamp(230px, 33vw, 390px);
+  padding-bottom: clamp(52px, 6vw, 80px);
+}
+
+/* ============================================================
+   4. HERO TITLE — large mixed-case display serif
+   ============================================================ */
+.hero-title {
+  font-size: clamp(50px, 11vw, 96px);
+  line-height: 1.0;
+  letter-spacing: 0.008em;
+  text-transform: none; /* Reference uses mixed case, not all-caps */
+  margin: 0;
+}
+
+/* "The Rothschild" — antique gold gradient */
+.hero-title .line-gold {
+  display: block;
+  background: linear-gradient(
+    175deg,
+    #faf0d2 0%,
+    #ecd38e 20%,
+    #d8ad56 45%,
+    #a87d2a 75%,
+    #7c5716 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.5));
+}
+
+/* "Family" — warm cream, slightly smaller */
+.hero-title .line-cream {
+  display: block;
+  margin-top: 0.04em;
+  font-size: 0.88em;
+  color: #ede5cf;
+  -webkit-text-fill-color: #ede5cf;
+  text-shadow: 0 3px 16px rgba(0, 0, 0, 0.55);
+}
+
+/* Keep "The Rothschild" on one line on wider screens */
+@media (min-width: 820px) {
+  .hero-title .line-gold {
+    white-space: nowrap;
+  }
+}
+
+/* ============================================================
+   5. HERO BUTTONS — side-by-side, reference proportions
+   ============================================================ */
+.hero-buttons {
+  margin-top: 40px;
+  gap: 20px;
+  flex-wrap: nowrap;
+}
+
+.hero-buttons .btn {
+  min-width: 210px;
+  padding: 21px 30px;
+  font-size: 13.5px;
+  letter-spacing: 0.22em;
+  border-radius: 4px;
+}
+
+@media (max-width: 500px) {
+  .hero-buttons {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .hero-buttons .btn {
+    min-width: 0;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   6. PARCHMENT / ARCHIVAL SECTION
+   ============================================================ */
+.archival-section {
+  position: relative;
+  /* Rich antique parchment base */
+  background: #ead9b8;
+  /* Minimal top padding — photo should start close to torn edge */
+  padding: 18px 0 68px;
+  /* CRITICAL: must be overflow:visible so wax seal can bleed outside */
+  overflow: visible;
+}
+
+/* Suppress the repeating tex-parchment pattern from global.css */
+.archival-section.tex-parchment {
+  background-image: none;
+}
+
+/* ── Layer 1: Parchment grain + old map wash ──────────────── */
+.archival-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    /* Old map – right side, atmospheric */
+    url("../assets/images/13_old_map_texture.jpg") no-repeat right 10% / 52%,
+    /* Parchment grain – full section */
+    url("../assets/images/09_parchment_texture.jpg") no-repeat center / cover;
+  opacity: 0.28;
+  mix-blend-mode: multiply;
+}
+
+/* ── Layer 2: Handwriting script, fading on all edges ─────── */
+.archival-section::after {
+  content: "";
+  position: absolute;
+  /* Cover the whole section, not just a corner */
+  inset: 0;
+  pointer-events: none;
+  background: url("../assets/images/11_old_script_texture.jpg") repeat;
+  background-size: 480px;
+  opacity: 0.20;
+  mix-blend-mode: multiply;
+  /* Radial mask so edges fade out cleanly — no hard rectangle */
+  -webkit-mask-image: radial-gradient(
+    ellipse 88% 85% at 50% 50%,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 55%,
+    transparent 82%
+  );
+  mask-image: radial-gradient(
+    ellipse 88% 85% at 50% 50%,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 55%,
+    transparent 82%
+  );
+}
+
+/* ============================================================
+   7. PHOTO FRAME — wide landscape with antique gold border
+   ============================================================ */
+
+/* The container must allow overflow for wax seal */
+.archival-section .container {
+  overflow: visible;
+}
+
+.photo-frame {
+  position: relative;
+  /* Wide as possible — reference is ~88-90% viewport width */
+  max-width: 920px;
+  width: 93%;
+  margin: 0 auto;
+  /* Antique gold outer border — thin, historical */
+  border: 1.5px solid rgba(165, 125, 55, 0.9);
+  border-radius: 3px;
+  /* Very thin mat — keeps focus on the photo, not the border */
+  padding: 5px;
+  background: #100c06;
+  box-shadow:
+    inset 0 1px 0 rgba(230, 190, 90, 0.1),
+    0 24px 58px -14px rgba(8, 5, 2, 0.62),
+    0 8px 22px -8px rgba(8, 5, 2, 0.4);
+  /* CRITICAL: allow wax seal to overflow the frame boundaries */
+  overflow: visible;
+}
+
+/* Inner hairline border — double-line frame effect */
+.photo-frame::before {
+  content: "";
+  position: absolute;
+  inset: 11px;
+  border: 1px solid rgba(165, 125, 55, 0.28);
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.photo-frame-inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+  /* ~1.88:1 landscape — matches reference proportions */
+  aspect-ratio: 1.88 / 1;
+}
+
+.photo-frame-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  filter: sepia(0.6) contrast(1.10) brightness(0.94) saturate(0.85);
+}
+
+/* Edge vignette on the photo */
+.photo-frame-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 85% 85% at 50% 50%, transparent 28%, rgba(8, 5, 2, 0.22) 100%),
+    linear-gradient(
+      180deg,
+      rgba(8, 5, 2, 0.22) 0%,
+      transparent 20%,
+      transparent 65%,
+      rgba(8, 5, 2, 0.52) 100%
+    );
+}
+
+/* ============================================================
+   8. PHOTO CAPTIONS — uppercase serif, reference positioning
+   ============================================================ */
+.photo-caption-top {
+  position: absolute;
+  top: 22px;
+  right: 26px;
+  z-index: 3;
+  text-align: right;
+}
+
+.photo-caption-top .cap-title {
+  font-family: var(--font-serif);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  line-height: 1.7;
+  color: var(--color-gold-bright);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.85);
+}
+
+.photo-caption-top .cap-rule {
+  display: none;
+}
+
+.photo-caption-bottom {
+  position: absolute;
+  bottom: 18px;
+  left: 22px;
+  z-index: 3;
+  color: #e8dcc2;
+  font-family: var(--font-serif);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  line-height: 1.7;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.92);
+}
+
+/* ============================================================
+   9. PLAY BUTTON — historical double-ring gold style
+   ============================================================ */
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  width: clamp(78px, 10.5vw, 112px);
+  height: clamp(78px, 10.5vw, 112px);
+  border-radius: 50%;
+  border: 2px solid rgba(215, 172, 78, 0.88);
+  background: rgba(5, 9, 20, 0.60);
+  /* Inner ring + glow */
+  box-shadow:
+    0 0 0 9px rgba(5, 9, 20, 0.28),
+    inset 0 0 0 2px rgba(215, 172, 78, 0.28),
+    0 14px 36px -8px rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease-classic), background 0.25s ease;
+}
+
+.play-button:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: rgba(8, 13, 26, 0.80);
+}
+
+.play-button .triangle {
+  width: 0;
+  height: 0;
+  margin-left: 6px;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 24px solid var(--color-gold-bright);
+}
+
+/* ============================================================
+   10. WAX SEAL — overlaps lower-right corner of photo frame
+   ============================================================ */
+
+/* The .photo-frame has overflow:visible so the seal can bleed outside.
+   The parent .archival-section also has overflow:visible.
+   filter lives on the OUTER wrapper; mask lives on the inner img
+   (if both are on the same element, the shadow is computed before
+   the mask clips the alpha → you get a ghost square halo). */
+.wax-seal {
+  position: absolute;
+  bottom: clamp(-72px, -7.8vw, -52px);
+  right: clamp(-44px, -4.8vw, -28px);
+  width: clamp(118px, 19.5vw, 186px);
+  height: clamp(118px, 19.5vw, 186px);
+  z-index: 10;
+  transform: rotate(-6deg);
+  filter:
+    drop-shadow(0 18px 26px rgba(0, 0, 0, 0.58))
+    drop-shadow(0 4px 8px rgba(0, 0, 0, 0.42));
+}
+
+.wax-seal-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Force clean circular cutout — the PNG's alpha is noisy at corners */
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 49%,
+    #000 0%,
+    #000 76%,
+    rgba(0, 0, 0, 0.35) 84%,
+    transparent 91%
+  );
+  mask-image: radial-gradient(
+    circle at 50% 49%,
+    #000 0%,
+    #000 76%,
+    rgba(0, 0, 0, 0.35) 84%,
+    transparent 91%
+  );
+}
+
+/* ============================================================
+   11. BOTTOM TAGLINE — small uppercase serif, dark brown ink
+   ============================================================ */
+.homepage-tagline {
+  text-align: center;
+  /* Enough top padding to clear the wax seal which extends below the frame */
+  padding: 90px 24px 16px;
+  font-family: var(--font-serif);
+  font-size: 11px;
+  /* Reduced letter spacing to prevent overflow at narrow viewports */
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6b5535;
+  position: relative;
+  z-index: 2;
+  /* Prevent tagline from overflowing on narrow viewports */
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ============================================================
+   12. RESPONSIVE — maintain composition at key breakpoints
+   ============================================================ */
+
+/* Tablet landscape / small desktop ≤ 1024 */
+@media (max-width: 1024px) {
+  .hero-art-arch { width: 68%; }
+  .hero-art-crest { width: 66%; }
+}
+
+/* Tablet portrait ≤ 768 */
+@media (max-width: 768px) {
+  .hero-content {
+    padding-top: clamp(190px, 50vw, 310px);
+    padding-bottom: clamp(44px, 7vw, 68px);
+  }
+
+  .hero-art-arch {
+    width: 85%;
+    height: 72%;
+  }
+
+  .hero-art-crest {
+    width: 68%;
+    height: 52%;
+  }
+
+  .hero-title {
+    font-size: clamp(40px, 12vw, 70px);
+  }
+
+  .photo-frame {
+    width: 94%;
+  }
+
+  .wax-seal {
+    width: 88px;
+    height: 88px;
+    bottom: -36px;
+    right: -18px;
+  }
+
+  .homepage-tagline {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    line-height: 2.0;
+  }
+}
+
+/* Mobile ≤ 480 */
+@media (max-width: 480px) {
+  .site-header .container {
+    min-height: 80px;
+  }
+
+  .site-header .monogram-letter {
+    font-size: 52px;
+  }
+
+  .hero-content {
+    padding-top: 185px;
+    padding-bottom: 44px;
+  }
+
+  .hero-title {
+    font-size: clamp(32px, 11vw, 48px);
+  }
+
+  .hero-buttons {
+    margin-top: 32px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-buttons .btn {
+    min-width: 0;
+    width: 100%;
+    justify-content: center;
+    padding: 18px 24px;
+    font-size: 13px;
+  }
+
+  .archival-section {
+    padding: 24px 0 60px;
+  }
+
+  .photo-frame {
+    width: 95%;
+    margin: 0 auto;
+    padding: 5px;
+  }
+
+  .photo-frame-inner {
+    aspect-ratio: 1.65 / 1;
+  }
+
+  .photo-caption-top,
+  .photo-caption-bottom {
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+  }
+
+  .photo-caption-top {
+    top: 14px;
+    right: 14px;
+  }
+
+  .photo-caption-bottom {
+    bottom: 14px;
+    left: 14px;
+  }
+
+  .play-button {
+    width: 58px;
+    height: 58px;
+  }
+
+  .play-button .triangle {
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 16px;
+  }
+
+  .wax-seal {
+    width: 66px;
+    height: 66px;
+    bottom: -26px;
+    right: -10px;
+  }
+}
