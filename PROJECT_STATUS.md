@@ -1,6 +1,6 @@
 # Rothschild Illuminati Organization — Project Status
 
-Last updated: 2026-09-10
+Last updated: 2026-09-12
 
 ## Phase Progress
 
@@ -214,6 +214,50 @@ real text-overflow at 1024px and 390px widths, given the fixed 860px
 was a deliberate trade-off (no overflow > exact px target) and would need a
 structural change (e.g. a viewport-aware `hero-content` max-width) to safely
 increase further.
+
+## Homepage correction pass #3 (2026-09-10 → 2026-09-12)
+
+After the machine restart, recovered project state and continued the homepage
+top-half refinement. Created `css/homepage-v3.css` (loaded last, after all
+other stylesheets) as a dedicated override layer rather than editing the base
+CSS files — this keeps changes safe and reversible, and avoids re-introducing
+the container-padding regression from pass #1.
+
+Key changes in homepage-v3.css:
+- **Header**: switched to `position: absolute` so it floats over the hero
+  artwork rather than pushing it down. Semi-transparent gradient background
+  preserves artwork visibility. `border-bottom: none` removes the dividing line.
+- **Hero layout**: changed to `display: block; height: auto` (removed the
+  `flex / justify-content: flex-end` that created empty dark space below the
+  buttons at some viewport heights). Now uses `padding-top` on `.hero-content`
+  to push text below the artwork zone.
+- **Hero artwork**: `min-height: 0` on `.hero` — height is now fully content-
+  driven, eliminating the gap between buttons and parchment that existed before.
+- **Torn parchment transition**: inline SVG `mask-image` with a custom jagged
+  path (`0,68 … L1440,12 L1440,68 Z`) applied via `.hero::after`, giving a
+  rough irregular torn-paper silhouette in parchment color at the hero bottom.
+- **Parchment textures**: script texture now covers the full section with
+  `background-size: 480px` (repeating) masked by a radial gradient — no hard
+  rectangle edges; old-map texture blended at 0.28 opacity.
+- **Photo frame**: `overflow: visible` propagated through both `.photo-frame`
+  and `.archival-section .container` so the wax seal can overflow the frame.
+  Mat padding reduced to 5px; border to 1.5px. `border-radius: 3px`.
+- **Wax seal**: two-layer pattern preserved (filter on outer `.wax-seal` div,
+  mask-image on inner `.wax-seal-img`) to prevent ghost-square drop-shadow
+  artifact; `bottom`/`right` offsets adjusted with clamp() for scale.
+- **Tagline**: letter-spacing reduced from 0.36em to 0.22em with
+  `word-break: break-word` fallback — prevents overflow at narrow viewports.
+- **Body**: `background: #070c17` matches the hero's deep navy so any side-
+  edge bleed from the artwork layer is invisible rather than parchment-colored.
+
+Verified (via browser subagent screenshots at 941×1800):
+- No hard line between header and hero ✅
+- Crest (left) and architecture (right) visible through header area ✅
+- Torn jagged edge at hero/parchment boundary ✅
+- Photo frame wide (~93% of viewport), wax seal extends below-right ✅
+- Tagline fits on one line at 941px ✅
+- No console errors; no horizontal overflow ✅
+- Git commit: 2e26c1d
 
 ## Notes / Decisions
 
