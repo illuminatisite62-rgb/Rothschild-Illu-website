@@ -11,7 +11,10 @@ insert into storage.buckets (id, name, public)
 values
   ('profile-images', 'profile-images', true),
   ('gallery-images', 'gallery-images', true),
-  ('archive-media', 'archive-media', true)
+  ('archive-media', 'archive-media', true),
+  ('admin-uploads', 'admin-uploads', true),
+  ('archive-files', 'archive-files', true),
+  ('membership-photos', 'membership-photos', true)
 on conflict (id) do nothing;
 
 -- ----------------------------------------------------------------------------
@@ -20,7 +23,7 @@ on conflict (id) do nothing;
 drop policy if exists "storage_public_read" on storage.objects;
 create policy "storage_public_read"
   on storage.objects for select
-  using (bucket_id in ('profile-images', 'gallery-images', 'archive-media'));
+  using (bucket_id in ('profile-images', 'gallery-images', 'archive-media', 'admin-uploads', 'archive-files', 'membership-photos'));
 
 -- ----------------------------------------------------------------------------
 -- Admin-only upload / replace / delete
@@ -29,7 +32,7 @@ drop policy if exists "storage_admin_insert" on storage.objects;
 create policy "storage_admin_insert"
   on storage.objects for insert
   with check (
-    bucket_id in ('profile-images', 'gallery-images', 'archive-media')
+    bucket_id in ('profile-images', 'gallery-images', 'archive-media', 'admin-uploads', 'archive-files')
     and is_admin()
   );
 
@@ -37,11 +40,11 @@ drop policy if exists "storage_admin_update" on storage.objects;
 create policy "storage_admin_update"
   on storage.objects for update
   using (
-    bucket_id in ('profile-images', 'gallery-images', 'archive-media')
+    bucket_id in ('profile-images', 'gallery-images', 'archive-media', 'admin-uploads', 'archive-files')
     and is_admin()
   )
   with check (
-    bucket_id in ('profile-images', 'gallery-images', 'archive-media')
+    bucket_id in ('profile-images', 'gallery-images', 'archive-media', 'admin-uploads', 'archive-files')
     and is_admin()
   );
 
@@ -49,6 +52,16 @@ drop policy if exists "storage_admin_delete" on storage.objects;
 create policy "storage_admin_delete"
   on storage.objects for delete
   using (
-    bucket_id in ('profile-images', 'gallery-images', 'archive-media')
+    bucket_id in ('profile-images', 'gallery-images', 'archive-media', 'admin-uploads', 'archive-files')
     and is_admin()
+  );
+
+-- ----------------------------------------------------------------------------
+-- Public upload for membership applications
+-- ----------------------------------------------------------------------------
+drop policy if exists "storage_public_insert_membership" on storage.objects;
+create policy "storage_public_insert_membership"
+  on storage.objects for insert
+  with check (
+    bucket_id = 'membership-photos'
   );
