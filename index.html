@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="css/homepage.css?v=3" />
 <link rel="stylesheet" href="css/responsive.css?v=3" />
   <link rel="stylesheet" href="css/homepage-v3.css?v=2" />
+  <link rel="stylesheet" href="css/archive-sections.css?v=1" />
 </head>
 <body>
 
@@ -129,6 +130,55 @@
     <p class="homepage-tagline" id="cmsTaglineText">People &mdash; Ideas &mdash; Opportunities &mdash; A Stronger Tomorrow</p>
   </section>
 
+  <!-- ================= ABOUT THE ARCHIVE ================= -->
+  <section class="about-archive-section" id="about-archive" aria-labelledby="aboutArchiveHeading">
+    <div class="container">
+      <div class="about-archive-inner">
+
+        <!-- Left: historical image -->
+        <div class="about-archive-image-wrap">
+          <div class="about-archive-frame">
+            <img
+              class="about-archive-img"
+              src="assets/images/08_archive_books_globe.jpg"
+              alt="Historical archive library with leather-bound volumes and a globe"
+            />
+          </div>
+          <p class="about-archive-img-caption">The Rothschild Archive — Primary Sources &amp; Reference Collection</p>
+        </div>
+
+        <!-- Right: text -->
+        <div class="about-archive-content">
+          <span class="sec-eyebrow sec-eyebrow--left">The Archive</span>
+          <h2 class="sec-heading about-archive-heading" id="aboutArchiveHeading">
+            Preserving A Legacy Through History
+          </h2>
+          <p class="about-archive-subtitle">A structured digital record of the Rothschild family</p>
+          <div class="about-archive-divider" aria-hidden="true"></div>
+          <p class="about-archive-body">
+            This platform is a digital archive dedicated to the exploration and preservation of
+            the Rothschild family's extraordinary historical record. Drawing from primary sources,
+            historical publications and archival documents, it presents a curated body of
+            biographical records, genealogical data, and contextual history.
+          </p>
+          <p class="about-archive-body">
+            From the founding house in Frankfurt to the far-reaching banking dynasties of
+            London, Paris, Vienna, Naples and Frankfurt, the archive documents the people,
+            decisions and relationships that shaped one of history's most remarkable families.
+          </p>
+          <p class="about-archive-body">
+            Every entry is administrator-curated and referenced to its source. The archive
+            continues to grow as new documents and biographical records are added.
+          </p>
+          <div class="about-archive-cta">
+            <a href="archive.html" class="btn-archive btn-archive--solid">Explore the Archive <span class="btn-archive-arrow">&rsaquo;</span></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ================= FEATURED PROFILES ================= -->
   <section class="featured-section">
     <div class="container">
@@ -174,10 +224,104 @@
             <a href="profile.html?slug=james-mayer-de-rothschild" class="featured-card-link">View Biography</a>
           </div>
         </article>
+        <article class="featured-card">
+          <div class="featured-card-media">
+            <img src="assets/images/05_archival_family_photo.jpg" alt="Portrait placeholder" />
+            <span class="featured-card-badge">Featured</span>
+          </div>
+          <div class="featured-card-body">
+            <h3 class="featured-card-name">Salomon Mayer Rothschild</h3>
+            <p class="featured-card-meta">1774 &ndash; 1855 &middot; Banker</p>
+            <p class="featured-card-bio">Founder of the Vienna branch of the family, central to the financing of the Austrian Empire.</p>
+            <a href="profile.html?slug=salomon-mayer-rothschild" class="featured-card-link">View Biography</a>
+          </div>
+        </article>
       </div>
 
       <div class="section-footer-link">
         <a href="family.html" class="btn btn-outline-gold">Browse the Full Family Directory <span class="btn-arrow">&rsaquo;</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAMILY TREE ================= -->
+  <section class="family-tree-section" id="family-tree" aria-labelledby="familyTreeHeading">
+    <div class="container">
+      <div class="family-tree-intro">
+        <span class="sec-eyebrow">Genealogy</span>
+        <h2 class="sec-heading family-tree-heading" id="familyTreeHeading">The Family Tree</h2>
+        <div class="section-gold-rule" aria-hidden="true">
+          <span class="section-gold-rule-glyph">&#9884;</span>
+        </div>
+        <p class="family-tree-lead">
+          From the founding figure of Mayer Amschel Rothschild, five sons established the family's
+          European banking network — each building a dynastic house in a different capital city.
+        </p>
+      </div>
+
+      <div class="family-tree-diagram" role="img" aria-label="Rothschild family tree showing Mayer Amschel and his five sons">
+
+        <!-- Generation 0: Founder -->
+        <div class="tree-gen-0">
+          <div class="tree-node tree-node--founder">
+            <div class="tree-node-monogram" aria-hidden="true">M</div>
+            <p class="tree-node-name">Mayer Amschel Rothschild</p>
+            <p class="tree-node-dates">1744 &ndash; 1812</p>
+            <p class="tree-node-role">Founder &middot; Frankfurt</p>
+            <a href="profile.html?slug=mayer-amschel-rothschild" class="tree-node-link">View profile</a>
+          </div>
+        </div>
+
+        <div class="tree-connector-v" aria-hidden="true"></div>
+        <div class="tree-h-bar-wrap" aria-hidden="true"><div class="tree-h-bar"></div></div>
+
+        <!-- Generation 1: Five sons -->
+        <div class="tree-gen-1">
+          <div class="tree-gen-1-item">
+            <div class="tree-tick" aria-hidden="true"></div>
+            <div class="tree-node">
+              <div class="tree-node-monogram" aria-hidden="true">A</div>
+              <p class="tree-node-name">Amschel Mayer</p>
+              <p class="tree-node-dates">1773 &ndash; 1855</p>
+              <p class="tree-node-role">Frankfurt Branch</p>
+            </div>
+          </div>
+          <div class="tree-gen-1-item">
+            <div class="tree-tick" aria-hidden="true"></div>
+            <div class="tree-node">
+              <div class="tree-node-monogram" aria-hidden="true">S</div>
+              <p class="tree-node-name">Salomon Mayer</p>
+              <p class="tree-node-dates">1774 &ndash; 1855</p>
+              <p class="tree-node-role">Vienna Branch</p>
+              <a href="profile.html?slug=salomon-mayer-rothschild" class="tree-node-link">View profile</a>
+            </div>
+          </div>
+          <div class="tree-gen-1-item">
+            <div class="tree-tick" aria-hidden="true"></div>
+            <div class="tree-node">
+              <div class="tree-node-monogram" aria-hidden="true">N</div>
+              <p class="tree-node-name">Nathan Mayer</p>
+              <p class="tree-node-dates">1777 &ndash; 1836</p>
+              <p class="tree-node-role">London Branch</p>
+              <a href="profile.html?slug=nathan-mayer-rothschild" class="tree-node-link">View profile</a>
+            </div>
+          </div>
+          <div class="tree-gen-1-item">
+            <div class="tree-tick" aria-hidden="true"></div>
+            <div class="tree-node">
+              <div class="tree-node-monogram" aria-hidden="true">J</div>
+              <p class="tree-node-name">James Mayer</p>
+              <p class="tree-node-dates">1792 &ndash; 1868</p>
+              <p class="tree-node-role">Paris Branch</p>
+              <a href="profile.html?slug=james-mayer-de-rothschild" class="tree-node-link">View profile</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="family-tree-cta">
+        <a href="family.html" class="btn-archive btn-archive--parchment">Explore the Full Family Tree <span>&rsaquo;</span></a>
       </div>
     </div>
   </section>
@@ -218,16 +362,229 @@
     </div>
   </section>
 
-  <!-- ================= ARCHIVE PREVIEW ================= -->
-  <section class="archive-preview-section">
-    <div class="archive-preview-inner">
-      <div class="container">
-        <div class="archive-preview-content">
-          <p class="section-eyebrow">The Collection</p>
-          <h2>Historical Archive</h2>
-          <p>Explore rare documents, photographs, letters and records preserved from the Rothschild family history.</p>
-          <a href="archive.html" class="btn btn-gold">Explore Archive <span class="btn-arrow">&rsaquo;</span></a>
+  <!-- ================= ARCHIVE COLLECTION ================= -->
+  <section class="archive-collection-section" id="archive-collection" aria-labelledby="archiveCollectionHeading">
+    <div class="container">
+      <div class="archive-collection-intro">
+        <span class="sec-eyebrow">The Collection</span>
+        <h2 class="sec-heading archive-collection-heading" id="archiveCollectionHeading">The Archive Collection</h2>
+        <div class="section-gold-rule" aria-hidden="true">
+          <span class="section-gold-rule-glyph">&#9884;</span>
         </div>
+        <p class="archive-collection-lead">
+          A structured record of rare documents, photographic material and historical
+          properties preserved from the Rothschild family's extensive archive.
+        </p>
+      </div>
+
+      <div class="archive-panels">
+
+        <!-- Panel 1: Documents -->
+        <article class="archive-panel">
+          <div class="archive-panel-media">
+            <img src="assets/images/08_archive_books_globe.jpg" alt="Historical leather-bound volumes and archive materials" />
+          </div>
+          <div class="archive-panel-body">
+            <p class="archive-panel-category">Category I</p>
+            <h3 class="archive-panel-title">Historical Documents</h3>
+            <p class="archive-panel-desc">
+              Letters, financial records, governmental correspondence, and primary-source
+              papers from the Rothschild banking houses across Europe. Each document is
+              referenced to its archival source.
+            </p>
+            <div class="archive-panel-cta">
+              <a href="archive.html" class="btn-archive">View Collection <span>&rsaquo;</span></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Panel 2: Photographs -->
+        <article class="archive-panel">
+          <div class="archive-panel-media">
+            <img src="assets/images/05_archival_family_photo.jpg" alt="Formal archival portrait of the Rothschild family" />
+          </div>
+          <div class="archive-panel-body">
+            <p class="archive-panel-category">Category II</p>
+            <h3 class="archive-panel-title">Photographic Collection</h3>
+            <p class="archive-panel-desc">
+              Formal portraits, family gatherings, and estate photography spanning the
+              19th and 20th centuries. Images are presented with contextual captions
+              and approximate dating.
+            </p>
+            <div class="archive-panel-cta">
+              <a href="archive.html" class="btn-archive">View Collection <span>&rsaquo;</span></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Panel 3: Estates -->
+        <article class="archive-panel">
+          <div class="archive-panel-media">
+            <img src="assets/images/04_hero_classical_architecture.jpg" alt="Classical European architecture associated with the Rothschild estates" />
+          </div>
+          <div class="archive-panel-body">
+            <p class="archive-panel-category">Category III</p>
+            <h3 class="archive-panel-title">Estates &amp; Locations</h3>
+            <p class="archive-panel-desc">
+              A record of the historic properties, banking premises and cultural
+              institutions associated with the family — from the Frankfurt Judengasse
+              to the great country houses of England and France.
+            </p>
+            <div class="archive-panel-cta">
+              <a href="archive.html" class="btn-archive">View Collection <span>&rsaquo;</span></a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RESEARCH & SOURCES ================= -->
+  <section class="research-section" id="research-sources" aria-labelledby="researchHeading">
+    <div class="container">
+      <div class="research-inner">
+
+        <!-- Left: content -->
+        <div class="research-content">
+          <span class="sec-eyebrow sec-eyebrow--left">Scholarship</span>
+          <h2 class="sec-heading research-heading" id="researchHeading">Historical Research &amp; Sources</h2>
+          <div class="about-archive-divider" aria-hidden="true"></div>
+          <p class="research-lead">
+            Every biographical entry, timeline event and archival item on this platform is
+            referenced to its historical source. The archive draws from published histories,
+            institutional records, academic biographies and primary documents held in
+            public and private collections.
+          </p>
+          <p class="research-lead">
+            Our approach is to present documented history clearly, with citations visible
+            on each record. Speculative or unsourced claims are not published.
+          </p>
+          <div class="research-cta">
+            <a href="archive.html" class="btn-archive btn-archive--parchment">View Sources &amp; References <span>&rsaquo;</span></a>
+          </div>
+        </div>
+
+        <!-- Right: pillars -->
+        <div class="research-pillars">
+          <div class="research-pillar">
+            <div class="research-pillar-icon" aria-hidden="true">S</div>
+            <div class="research-pillar-body">
+              <h3 class="research-pillar-title">Primary Sources</h3>
+              <p class="research-pillar-desc">
+                Original letters, financial records, estate documents and legal papers
+                from the Rothschild archive and institutional collections.
+              </p>
+            </div>
+          </div>
+          <div class="research-pillar">
+            <div class="research-pillar-icon" aria-hidden="true">R</div>
+            <div class="research-pillar-body">
+              <h3 class="research-pillar-title">Published References</h3>
+              <p class="research-pillar-desc">
+                Scholarly biographies, academic histories and peer-reviewed works
+                cited and linked where available for independent verification.
+              </p>
+            </div>
+          </div>
+          <div class="research-pillar">
+            <div class="research-pillar-icon" aria-hidden="true">D</div>
+            <div class="research-pillar-body">
+              <h3 class="research-pillar-title">Documentation Standards</h3>
+              <p class="research-pillar-desc">
+                All administrator-entered content follows a documented review
+                process. Dates, claims and attributions are verified before publication.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MISSION ================= -->
+  <section class="mission-section" id="our-mission" aria-labelledby="missionHeading">
+    <div class="container">
+      <div class="mission-inner">
+        <span class="mission-ornament" aria-hidden="true">&ldquo;</span>
+        <span class="sec-eyebrow">Our Mission</span>
+        <h2 class="sec-heading mission-heading" id="missionHeading">Preserving History for Future Generations</h2>
+        <p class="mission-text">
+          This archive exists to make the documented history of the Rothschild family
+          accessible, structured and searchable — presented as biography, timeline
+          and primary-source material rather than speculation or legend.
+        </p>
+        <p class="mission-text">
+          We believe that historical figures deserve to be understood through evidence.
+          Every record published here is sourced, administrator-reviewed and presented
+          with the context necessary to be understood clearly.
+        </p>
+        <div class="mission-rule" aria-hidden="true"></div>
+        <div class="mission-values" aria-label="Our guiding values">
+          <div class="mission-value">
+            <span class="mission-value-latin">Concordia</span>
+            <span class="mission-value-english">Unity</span>
+          </div>
+          <div class="mission-value">
+            <span class="mission-value-latin">Integritas</span>
+            <span class="mission-value-english">Integrity</span>
+          </div>
+          <div class="mission-value">
+            <span class="mission-value-latin">Fortitudo</span>
+            <span class="mission-value-english">Fortitude</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NEWSLETTER ================= -->
+  <section class="newsletter-section" id="newsletter" aria-labelledby="newsletterHeading">
+    <div class="container">
+      <div class="newsletter-inner">
+        <span class="sec-eyebrow">Stay Connected</span>
+        <h2 class="sec-heading newsletter-heading" id="newsletterHeading">
+          Stay Connected with the Archive
+        </h2>
+        <p class="newsletter-lead">
+          Receive notifications when new biographies, timeline entries and archive
+          materials are published. We write infrequently and only when content of
+          substance has been added.
+        </p>
+
+        <form class="newsletter-form" id="newsletterForm" novalidate>
+          <div class="newsletter-field">
+            <label for="nlName" class="sr-only">Your name</label>
+            <input
+              type="text"
+              id="nlName"
+              name="name"
+              class="newsletter-input"
+              placeholder="Your name (optional)"
+              autocomplete="name"
+            />
+          </div>
+          <div class="newsletter-field">
+            <label for="nlEmail" class="sr-only">Email address</label>
+            <input
+              type="email"
+              id="nlEmail"
+              name="email"
+              class="newsletter-input"
+              placeholder="Your email address"
+              required
+              autocomplete="email"
+            />
+          </div>
+          <button type="submit" class="newsletter-submit">
+            Subscribe to the Archive
+            <span class="newsletter-submit-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+        </form>
+
+        <div class="newsletter-message" id="newsletterMessage" role="status" aria-live="polite"></div>
+        <p class="newsletter-disclaimer">Your details are held securely and never shared with third parties.</p>
       </div>
     </div>
   </section>
@@ -242,6 +599,7 @@
   </div>
 </div>
 
+<div class="site-footer-divider" aria-hidden="true"></div>
 <!-- ================= FOOTER ================= -->
 <footer class="site-footer tex-filigree">
   <div class="container">
@@ -292,5 +650,6 @@
 <script src="js/supabase-client.js" type="module"></script>
 <script src="js/app.js"></script>
 <script src="js/homepage.js" type="module"></script>
+<script src="js/archive-sections.js"></script>
 </body>
 </html>

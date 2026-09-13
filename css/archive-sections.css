@@ -1,0 +1,1123 @@
+/* ==========================================================================
+   Rothschild Archive — Extended Homepage Sections
+   Loaded AFTER all base stylesheets. Adds styles for:
+   About The Archive · Family Tree · Archive Collection
+   Research & Sources · Mission · Newsletter
+   ========================================================================== */
+
+/* ============================================================
+   SHARED UTILITIES (used across new sections)
+   ============================================================ */
+
+/* ── Scroll-reveal animation ─────────────────────────────── */
+.will-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s var(--ease-classic), transform 0.65s var(--ease-classic);
+}
+
+.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children in tree gen-1 */
+.tree-gen-1-item:nth-child(2) { transition-delay: 0.08s; }
+.tree-gen-1-item:nth-child(3) { transition-delay: 0.16s; }
+.tree-gen-1-item:nth-child(4) { transition-delay: 0.24s; }
+
+/* Stagger archive panels */
+.archive-panel:nth-child(2) { transition-delay: 0.10s; }
+.archive-panel:nth-child(3) { transition-delay: 0.20s; }
+
+/* ============================================================ */
+
+/* Gold ornamental rule — used between sections as chapter dividers */
+.section-gold-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 0 auto 52px;
+  max-width: 420px;
+}
+
+.section-gold-rule::before,
+.section-gold-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold) 60%, transparent);
+}
+
+.section-gold-rule-glyph {
+  font-size: 14px;
+  color: var(--color-gold);
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+}
+
+/* Section eyebrow label — uppercase tracked serif */
+.sec-eyebrow {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-gold);
+  display: block;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.sec-eyebrow--left {
+  text-align: left;
+}
+
+/* Section heading — large Playfair Display */
+.sec-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+/* Chapter intro paragraph */
+.sec-lead {
+  font-family: var(--font-serif);
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.75;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Antique gold thin-border button */
+.btn-archive {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  padding: 16px 32px;
+  border: 1.5px solid var(--color-gold);
+  color: var(--color-gold-bright);
+  background: transparent;
+  border-radius: var(--radius-sm);
+  transition: background 0.22s var(--ease-classic), color 0.22s ease;
+  cursor: pointer;
+}
+
+.btn-archive:hover {
+  background: rgba(201, 162, 75, 0.10);
+  color: var(--color-cream);
+}
+
+.btn-archive--solid {
+  background: var(--color-navy-deep);
+  color: var(--color-gold-bright);
+}
+
+.btn-archive--solid:hover {
+  background: var(--color-navy);
+  color: var(--color-cream);
+}
+
+.btn-archive--parchment {
+  border-color: var(--color-sepia);
+  color: var(--color-sepia-dark);
+}
+
+.btn-archive--parchment:hover {
+  background: rgba(74, 58, 34, 0.08);
+  color: var(--color-ink);
+}
+
+/* ============================================================
+   1. ABOUT THE ARCHIVE
+   ============================================================ */
+.about-archive-section {
+  position: relative;
+  background: var(--color-parchment-light);
+  padding: 100px 0 110px;
+  overflow: hidden;
+}
+
+/* Parchment grain wash */
+.about-archive-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/images/09_parchment_texture.jpg") no-repeat center / cover;
+  opacity: 0.14;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Old-map atmospheric accent — bottom-right corner */
+.about-archive-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 55%;
+  background: url("../assets/images/13_old_map_texture.jpg") no-repeat right bottom / cover;
+  opacity: 0.10;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.about-archive-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 88px);
+  align-items: center;
+}
+
+/* ── Left: historical image ──────────────────────────────── */
+.about-archive-image-wrap {
+  position: relative;
+}
+
+.about-archive-frame {
+  position: relative;
+  border: 1.5px solid rgba(165, 125, 55, 0.7);
+  border-radius: 3px;
+  padding: 6px;
+  background: #12100a;
+  box-shadow:
+    0 22px 55px -14px rgba(10, 7, 2, 0.55),
+    inset 0 1px 0 rgba(210, 175, 90, 0.12);
+}
+
+/* Double-border inner hairline */
+.about-archive-frame::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(165, 125, 55, 0.22);
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.about-archive-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 1px;
+  filter: sepia(0.55) contrast(1.1) brightness(0.9);
+}
+
+/* Atmospheric vignette over image */
+.about-archive-frame::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 1px;
+  background:
+    radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(8, 5, 2, 0.2) 100%),
+    linear-gradient(180deg, rgba(8, 5, 2, 0.18) 0%, transparent 18%, transparent 70%, rgba(8, 5, 2, 0.42) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Small caption under the image */
+.about-archive-img-caption {
+  margin-top: 14px;
+  font-family: var(--font-caption);
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--text-on-parchment-muted);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+/* ── Right: text content ─────────────────────────────────── */
+.about-archive-content {
+  padding: 12px 0;
+}
+
+.about-archive-heading {
+  font-size: clamp(30px, 3.8vw, 46px);
+  color: var(--color-sepia-dark);
+  margin-bottom: 10px;
+  line-height: 1.1;
+}
+
+.about-archive-subtitle {
+  font-family: var(--font-caption);
+  font-style: italic;
+  font-size: clamp(18px, 2.4vw, 24px);
+  color: var(--color-gold-deep);
+  margin-bottom: 26px;
+}
+
+.about-archive-divider {
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-gold) 0%, rgba(201, 162, 75, 0.2) 100%);
+  margin-bottom: 28px;
+}
+
+.about-archive-body {
+  font-family: var(--font-serif);
+  font-size: clamp(15px, 1.8vw, 17.5px);
+  line-height: 1.82;
+  color: var(--text-on-parchment);
+  margin-bottom: 14px;
+}
+
+.about-archive-body + .about-archive-body {
+  margin-top: -6px;
+}
+
+.about-archive-cta {
+  margin-top: 36px;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .about-archive-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .about-archive-img {
+    aspect-ratio: 4 / 3;
+  }
+
+  .about-archive-content {
+    padding: 0;
+  }
+}
+
+/* ============================================================
+   2. FEATURED PROFILES — override to 4 columns on desktop
+   ============================================================ */
+
+/* Switch the existing 3-column grid to 4 columns at wider viewports */
+@media (min-width: 900px) {
+  .featured-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+}
+
+/* On tablet: 2 columns */
+@media (max-width: 899px) and (min-width: 560px) {
+  .featured-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* On mobile: 1 column */
+@media (max-width: 559px) {
+  .featured-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   3. FAMILY TREE
+   ============================================================ */
+.family-tree-section {
+  position: relative;
+  background: var(--color-parchment);
+  padding: 100px 0 110px;
+  overflow: hidden;
+}
+
+/* Script texture background */
+.family-tree-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/images/11_old_script_texture.jpg") repeat;
+  background-size: 500px;
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.family-tree-intro {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 72px;
+  position: relative;
+  z-index: 1;
+}
+
+.family-tree-heading {
+  font-size: clamp(28px, 3.8vw, 44px);
+  color: var(--color-sepia-dark);
+  margin-bottom: 16px;
+}
+
+.family-tree-lead {
+  font-family: var(--font-serif);
+  font-size: 16.5px;
+  line-height: 1.78;
+  color: var(--text-on-parchment-muted);
+}
+
+/* ── Tree diagram ────────────────────────────────────────── */
+.family-tree-diagram {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* Generation 0 — founder */
+.tree-gen-0 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+/* Vertical connector from founder down */
+.tree-connector-v {
+  width: 1px;
+  height: clamp(32px, 4vw, 52px);
+  background: linear-gradient(180deg, var(--color-gold) 0%, rgba(201, 162, 75, 0.4) 100%);
+  margin: 0 auto;
+}
+
+/* Horizontal bar linking children */
+.tree-h-bar-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 1px;
+  margin-bottom: 0;
+}
+
+.tree-h-bar {
+  position: absolute;
+  top: 0;
+  left: 14%;
+  right: 14%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold) 12%, var(--color-gold) 88%, transparent);
+}
+
+/* Tick down from each child position */
+.tree-gen-1 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding-top: 0;
+}
+
+.tree-gen-1-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tree-tick {
+  width: 1px;
+  height: clamp(24px, 3vw, 40px);
+  background: linear-gradient(180deg, var(--color-gold) 0%, rgba(201, 162, 75, 0.3) 100%);
+}
+
+/* ── Profile node card ───────────────────────────────────── */
+.tree-node {
+  background: var(--color-parchment-light);
+  border: 1.5px solid rgba(165, 125, 55, 0.55);
+  border-radius: var(--radius-card);
+  padding: 22px 18px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  transition: transform 0.22s var(--ease-classic), box-shadow 0.22s ease;
+  width: 100%;
+}
+
+.tree-node:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-deep);
+}
+
+/* Founder node — slightly different treatment */
+.tree-node--founder {
+  border-color: var(--color-gold);
+  background: #f8f1de;
+  max-width: 240px;
+}
+
+.tree-node-monogram {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-gold-line);
+  background: var(--color-navy-deepest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-style: italic;
+  color: var(--color-gold-bright);
+}
+
+.tree-node--founder .tree-node-monogram {
+  width: 68px;
+  height: 68px;
+  font-size: 28px;
+  border-color: var(--color-gold);
+}
+
+.tree-node-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-sepia-dark);
+  line-height: 1.25;
+  margin-bottom: 5px;
+}
+
+.tree-node--founder .tree-node-name {
+  font-size: 17px;
+}
+
+.tree-node-dates {
+  font-family: var(--font-serif);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--color-gold-deep);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.tree-node-role {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 12.5px;
+  color: var(--text-on-parchment-muted);
+  line-height: 1.5;
+}
+
+.tree-node-link {
+  display: inline-block;
+  margin-top: 12px;
+  font-family: var(--font-serif);
+  font-size: 11px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-sepia-dark);
+  border-bottom: 1px solid var(--color-gold);
+  padding-bottom: 1px;
+}
+
+.family-tree-cta {
+  text-align: center;
+  margin-top: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Family Tree responsive ──────────────────────────────── */
+@media (max-width: 768px) {
+  .tree-gen-1 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tree-h-bar {
+    left: 24%;
+    right: 24%;
+  }
+}
+
+@media (max-width: 440px) {
+  .tree-gen-1 {
+    grid-template-columns: 1fr;
+  }
+
+  .tree-h-bar-wrap,
+  .tree-tick {
+    display: none;
+  }
+
+  .tree-gen-1-item {
+    margin-bottom: 16px;
+  }
+}
+
+/* ============================================================
+   4. ARCHIVE COLLECTION
+   ============================================================ */
+.archive-collection-section {
+  position: relative;
+  background: var(--color-navy-deepest);
+  padding: 100px 0 110px;
+  overflow: hidden;
+}
+
+/* Dark filigree texture */
+.archive-collection-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/images/10_dark_filigree_texture.jpg") repeat;
+  background-size: 640px;
+  opacity: 0.14;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.archive-collection-intro {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 72px;
+  position: relative;
+  z-index: 1;
+}
+
+.archive-collection-heading {
+  font-size: clamp(28px, 3.8vw, 44px);
+  color: var(--color-cream);
+  margin-bottom: 18px;
+}
+
+.archive-collection-lead {
+  font-family: var(--font-serif);
+  font-size: 16.5px;
+  line-height: 1.78;
+  color: var(--text-on-navy-muted);
+}
+
+.archive-panels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Each panel is a tall, museum-style display */
+.archive-panel {
+  position: relative;
+  border: 1px solid var(--color-gold-line);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--color-navy-deep);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s var(--ease-classic), box-shadow 0.25s ease;
+}
+
+.archive-panel:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px -18px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(201, 162, 75, 0.35);
+}
+
+/* Panel image area */
+.archive-panel-media {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--color-navy-deepest);
+}
+
+.archive-panel-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.45) brightness(0.72) contrast(1.08);
+  transition: transform 0.5s var(--ease-classic), filter 0.4s ease;
+}
+
+.archive-panel:hover .archive-panel-media img {
+  transform: scale(1.04);
+  filter: sepia(0.35) brightness(0.82) contrast(1.06);
+}
+
+/* Dark gradient overlay on image */
+.archive-panel-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(13, 24, 48, 0.85) 100%);
+  pointer-events: none;
+}
+
+/* Panel body */
+.archive-panel-body {
+  padding: 28px 28px 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.archive-panel-category {
+  font-family: var(--font-serif);
+  font-size: 10.5px;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.archive-panel-category::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--color-gold);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.archive-panel-title {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 26px);
+  color: var(--color-cream);
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.archive-panel-desc {
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  line-height: 1.72;
+  color: var(--text-on-navy-muted);
+  flex: 1;
+  margin-bottom: 24px;
+}
+
+.archive-panel-cta {
+  margin-top: auto;
+}
+
+/* Archive panels responsive */
+@media (max-width: 900px) {
+  .archive-panels {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 560px) and (max-width: 900px) {
+  .archive-panels {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+  }
+}
+
+/* ============================================================
+   5. RESEARCH & SOURCES
+   ============================================================ */
+.research-section {
+  position: relative;
+  background: var(--color-parchment-light);
+  padding: 100px 0 110px;
+  overflow: hidden;
+}
+
+.research-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/images/09_parchment_texture.jpg") no-repeat center / cover;
+  opacity: 0.12;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.research-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 88px);
+  align-items: start;
+}
+
+.research-content {
+  padding-top: 8px;
+}
+
+.research-heading {
+  font-size: clamp(28px, 3.5vw, 40px);
+  color: var(--color-sepia-dark);
+  margin-bottom: 20px;
+}
+
+.research-lead {
+  font-family: var(--font-serif);
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.85;
+  color: var(--text-on-parchment);
+  margin-bottom: 22px;
+}
+
+.research-cta {
+  margin-top: 32px;
+}
+
+/* Research pillars list */
+.research-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.research-pillar {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  background: rgba(255, 252, 244, 0.65);
+  border: 1px solid rgba(165, 125, 55, 0.3);
+  border-radius: var(--radius-card);
+  padding: 20px 22px;
+  box-shadow: 0 4px 14px -6px rgba(30, 20, 5, 0.15);
+}
+
+.research-pillar-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-navy-deepest);
+  border: 1.5px solid var(--color-gold-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--color-gold-bright);
+}
+
+.research-pillar-body {
+  flex: 1;
+}
+
+.research-pillar-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--color-sepia-dark);
+  margin-bottom: 5px;
+}
+
+.research-pillar-desc {
+  font-family: var(--font-serif);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-on-parchment-muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .research-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+/* ============================================================
+   6. MISSION
+   ============================================================ */
+.mission-section {
+  position: relative;
+  background: var(--color-navy-deepest);
+  padding: 110px 0 120px;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Architectural atmosphere */
+.mission-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/images/04_hero_classical_architecture.jpg") no-repeat center / cover;
+  opacity: 0.06;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+/* Radial dark vignette over the image */
+.mission-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 110% 80% at 50% 50%, rgba(7, 12, 23, 0.2) 0%, rgba(7, 12, 23, 0.7) 80%);
+  pointer-events: none;
+}
+
+.mission-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+/* Opening quote ornament */
+.mission-ornament {
+  font-family: var(--font-display);
+  font-size: 80px;
+  line-height: 0.6;
+  color: var(--color-gold);
+  opacity: 0.35;
+  display: block;
+  margin-bottom: 36px;
+  letter-spacing: -0.05em;
+}
+
+.mission-heading {
+  font-size: clamp(30px, 4.2vw, 52px);
+  color: var(--color-cream);
+  margin-bottom: 32px;
+}
+
+.mission-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(17px, 2.2vw, 22px);
+  line-height: 1.82;
+  color: var(--text-on-navy-muted);
+  max-width: 680px;
+  margin: 0 auto 16px;
+}
+
+.mission-text + .mission-text {
+  margin-top: 6px;
+}
+
+/* Gold separator line under text */
+.mission-rule {
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  margin: 40px auto;
+}
+
+/* Three value pillars */
+.mission-values {
+  display: flex;
+  justify-content: center;
+  gap: clamp(32px, 6vw, 72px);
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.mission-value {
+  text-align: center;
+}
+
+.mission-value-latin {
+  font-family: var(--font-caption);
+  font-style: italic;
+  font-size: clamp(15px, 2vw, 19px);
+  color: var(--color-gold-bright);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mission-value-english {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--text-on-navy-muted);
+}
+
+/* ============================================================
+   7. NEWSLETTER
+   ============================================================ */
+.newsletter-section {
+  position: relative;
+  background: var(--color-parchment);
+  padding: 90px 0 100px;
+  overflow: hidden;
+}
+
+.newsletter-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/images/09_parchment_texture.jpg") no-repeat center / cover;
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.newsletter-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  height: 50%;
+  background: url("../assets/images/11_old_script_texture.jpg") no-repeat left bottom / cover;
+  opacity: 0.10;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 10% 100%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 75% 75% at 10% 100%, #000 0%, transparent 75%);
+  pointer-events: none;
+}
+
+.newsletter-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 580px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.newsletter-heading {
+  font-size: clamp(24px, 3.2vw, 38px);
+  color: var(--color-sepia-dark);
+  margin-bottom: 14px;
+}
+
+.newsletter-lead {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(15px, 1.8vw, 17.5px);
+  line-height: 1.78;
+  color: var(--text-on-parchment-muted);
+  margin-bottom: 40px;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.newsletter-field {
+  position: relative;
+}
+
+.newsletter-input {
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(248, 243, 232, 0.8);
+  border: 1.5px solid rgba(165, 125, 55, 0.45);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-serif);
+  font-size: 15.5px;
+  color: var(--color-sepia-dark);
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  box-sizing: border-box;
+}
+
+.newsletter-input::placeholder {
+  color: var(--text-on-parchment-muted);
+  font-style: italic;
+}
+
+.newsletter-input:focus {
+  border-color: var(--color-gold);
+  background: rgba(248, 243, 232, 1);
+  box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.12);
+}
+
+.newsletter-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 18px 32px;
+  background: var(--color-navy-deepest);
+  border: 1.5px solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-serif);
+  font-size: 12.5px;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-gold-bright);
+  cursor: pointer;
+  transition: background 0.22s var(--ease-classic), color 0.22s ease;
+}
+
+.newsletter-submit:hover {
+  background: var(--color-navy-deep);
+  color: var(--color-cream);
+}
+
+.newsletter-submit-arrow {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.newsletter-disclaimer {
+  margin-top: 18px;
+  font-family: var(--font-serif);
+  font-size: 12px;
+  color: var(--text-on-parchment-muted);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Success / error states */
+.newsletter-message {
+  margin-top: 18px;
+  padding: 14px 20px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  display: none;
+}
+
+.newsletter-message.success {
+  display: block;
+  background: rgba(201, 162, 75, 0.12);
+  border: 1px solid rgba(201, 162, 75, 0.4);
+  color: var(--color-sepia-dark);
+}
+
+.newsletter-message.error {
+  display: block;
+  background: rgba(120, 30, 20, 0.08);
+  border: 1px solid rgba(120, 30, 20, 0.3);
+  color: #6b1a10;
+}
+
+/* ============================================================
+   8. ENHANCED FOOTER
+   ============================================================ */
+
+/* The footer already exists; just add the gold rule divider above it */
+.site-footer-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold-line) 25%, var(--color-gold-line) 75%, transparent);
+  margin: 0;
+}
+
+/* ============================================================
+   RESPONSIVE UTILITIES
+   ============================================================ */
+@media (max-width: 600px) {
+  .about-archive-section,
+  .family-tree-section,
+  .archive-collection-section,
+  .research-section,
+  .mission-section,
+  .newsletter-section {
+    padding: 72px 0 80px;
+  }
+
+  .mission-values {
+    gap: 24px;
+  }
+
+  .archive-panels {
+    grid-template-columns: 1fr;
+  }
+}
