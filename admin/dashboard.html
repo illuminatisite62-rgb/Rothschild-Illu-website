@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -19,7 +19,7 @@
 <div class="admin-shell">
   <aside class="admin-sidebar">
     <div class="admin-sidebar-brand">
-      <span class="monogram" aria-hidden="true"><span class="monogram-letter">R</span></span>
+      <img src="../assets/images/01_logo_emblem_transparent.png" alt="Rothschild Emblem" class="monogram" />
       <span class="admin-sidebar-brand-text">
         <span class="name">ROTHSCHILD</span><br />
         <span class="tag">Admin</span>
@@ -30,7 +30,9 @@
       <a href="profiles.html">Family Profiles</a>
       <a href="profile-editor.html">Add Profile</a>
       <a href="media.html">Media Library</a>
+      <a href="archive-admin.html">Archive Manager</a>
       <a href="timeline.html">Timeline</a>
+      <a href="membership.html">Membership</a>
       <a href="homepage.html">Homepage</a>
       <a href="settings.html">Site Settings</a>
     </nav>
@@ -49,12 +51,12 @@
     </div>
 
     <div class="stat-grid" id="statGrid">
-      <div class="stat-card"><div class="value">&hellip;</div><div class="label">Total Profiles</div></div>
-      <div class="stat-card"><div class="value">&hellip;</div><div class="label">Published Profiles</div></div>
-      <div class="stat-card"><div class="value">&hellip;</div><div class="label">Draft Profiles</div></div>
-      <div class="stat-card"><div class="value">&hellip;</div><div class="label">Featured Profiles</div></div>
-      <div class="stat-card"><div class="value">&hellip;</div><div class="label">Media Files</div></div>
-      <div class="stat-card"><div class="value">&hellip;</div><div class="label">Timeline Events</div></div>
+      <div class="stat-card"><div class="value" id="statProfiles">&hellip;</div><div class="label">Total Profiles</div></div>
+      <div class="stat-card"><div class="value" id="statPublished">&hellip;</div><div class="label">Published Profiles</div></div>
+      <div class="stat-card"><div class="value" id="statMedia">&hellip;</div><div class="label">Archive Items</div></div>
+      <div class="stat-card"><div class="value" id="statTimeline">&hellip;</div><div class="label">Timeline Events</div></div>
+      <div class="stat-card" style="cursor:pointer;" onclick="location.href='membership.html'"><div class="value" id="statMembership">&hellip;</div><div class="label">Membership Applications</div></div>
+      <div class="stat-card"><div class="value" id="statMessages">&hellip;</div><div class="label">Unread Messages</div></div>
     </div>
 
     <div class="admin-panel">
@@ -76,7 +78,24 @@
 
     <div class="admin-panel">
       <div class="admin-panel-heading">
-        <h2>Unread Messages</h2>
+        <h2>Pending Membership Applications</h2>
+        <a href="membership.html" class="row-actions"><span>View All &rsaquo;</span></a>
+      </div>
+      <div class="admin-table-wrap">
+        <table class="admin-table" id="membershipTable">
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Country</th><th>Received</th></tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="4" class="admin-empty">Loading&hellip;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="admin-panel">
+      <div class="admin-panel-heading">
+        <h2>Unread Contact Messages</h2>
         <a href="settings.html" class="row-actions"><span>Site Settings &rsaquo;</span></a>
       </div>
       <div class="admin-table-wrap">

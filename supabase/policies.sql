@@ -299,3 +299,52 @@ drop policy if exists "admin_roles_self_read" on admin_roles;
 create policy "admin_roles_self_read"
   on admin_roles for select
   using (user_id = auth.uid());
+
+-- ============================================================================
+-- membership_applications — anyone may INSERT (submit the join form).
+-- Only admins may read, update, or delete.
+-- ============================================================================
+alter table membership_applications enable row level security;
+
+drop policy if exists "membership_applications_public_insert" on membership_applications;
+create policy "membership_applications_public_insert"
+  on membership_applications for insert
+  with check (true);
+
+drop policy if exists "membership_applications_admin_read" on membership_applications;
+create policy "membership_applications_admin_read"
+  on membership_applications for select
+  using (is_admin());
+
+drop policy if exists "membership_applications_admin_update" on membership_applications;
+create policy "membership_applications_admin_update"
+  on membership_applications for update
+  using (is_admin())
+  with check (is_admin());
+
+drop policy if exists "membership_applications_admin_delete" on membership_applications;
+create policy "membership_applications_admin_delete"
+  on membership_applications for delete
+  using (is_admin());
+
+-- ============================================================================
+-- site_visitors — anyone may INSERT (optional account creation).
+-- Only admins may read or delete — visitors cannot see other visitors' records.
+-- ============================================================================
+alter table site_visitors enable row level security;
+
+drop policy if exists "site_visitors_public_insert" on site_visitors;
+create policy "site_visitors_public_insert"
+  on site_visitors for insert
+  with check (true);
+
+drop policy if exists "site_visitors_admin_read" on site_visitors;
+create policy "site_visitors_admin_read"
+  on site_visitors for select
+  using (is_admin());
+
+drop policy if exists "site_visitors_admin_delete" on site_visitors;
+create policy "site_visitors_admin_delete"
+  on site_visitors for delete
+  using (is_admin());
+

@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Membership Applications | Admin | Rothschild</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="../assets/images/01_logo_emblem_transparent.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/variables.css" />
+<link rel="stylesheet" href="../css/global.css" />
+<link rel="stylesheet" href="../css/admin.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+<style>
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.status-badge.pending  { background: rgba(201,168,76,0.15); color: #c9a84c; border: 1px solid rgba(201,168,76,0.4); }
+.status-badge.approved { background: rgba(50,180,80,0.12); color: #5cb85c; border: 1px solid rgba(50,180,80,0.4); }
+.status-badge.rejected { background: rgba(180,50,50,0.12); color: #d9534f; border: 1px solid rgba(180,50,50,0.4); }
+
+.detail-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+.detail-overlay[hidden] { display: none; }
+.detail-modal {
+  background: #1a1620;
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 4px;
+  max-width: 620px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
+}
+.detail-modal h2 { font-family: 'Playfair Display', serif; color: #c9a84c; margin: 0 0 1.5rem; }
+.detail-row { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+.detail-label { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(201,168,76,0.7); min-width: 110px; }
+.detail-value { color: #f5ede0; font-family: 'EB Garamond', serif; font-size: 1rem; flex: 1; }
+.detail-photo { max-width: 120px; max-height: 160px; border-radius: 3px; border: 1px solid rgba(201,168,76,0.25); margin-bottom: 1rem; }
+.detail-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.detail-close { margin-left: auto; }
+.admin-select-inline { background: #2a2030; border: 1px solid rgba(201,168,76,0.25); color: #f5ede0; padding: 0.35rem 0.6rem; border-radius: 3px; font-size: 0.85rem; }
+
+.filter-row { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
+.filter-row select { background: #1a1620; border: 1px solid rgba(201,168,76,0.2); color: #f5ede0; padding: 0.4rem 0.75rem; border-radius: 3px; font-size: 0.85rem; }
+.filter-row input  { background: #1a1620; border: 1px solid rgba(201,168,76,0.2); color: #f5ede0; padding: 0.4rem 0.75rem; border-radius: 3px; font-size: 0.85rem; flex: 1; min-width: 180px; }
+
+.clickable-row { cursor: pointer; transition: background 0.15s; }
+.clickable-row:hover td { background: rgba(201,168,76,0.05); }
+
+.reason-text { white-space: pre-wrap; max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: 3px; font-size: 0.95rem; line-height: 1.65; }
+</style>
+</head>
+<body class="admin-body" hidden>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-brand">
+      <img src="../assets/images/01_logo_emblem_transparent.png" alt="Rothschild Emblem" class="monogram" />
+      <span class="admin-sidebar-brand-text">
+        <span class="name">ROTHSCHILD</span><br />
+        <span class="tag">Admin</span>
+      </span>
+    </div>
+    <nav class="admin-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="profiles.html">Family Profiles</a>
+      <a href="profile-editor.html">Add Profile</a>
+      <a href="media.html">Media Library</a>
+      <a href="archive-admin.html">Archive Manager</a>
+      <a href="timeline.html">Timeline</a>
+      <a href="membership.html" class="active">Membership</a>
+      <a href="homepage.html">Homepage</a>
+      <a href="settings.html">Site Settings</a>
+    </nav>
+    <div class="admin-sidebar-foot">
+      <p class="admin-user-email" id="adminUserEmail"></p>
+      <button class="admin-logout-btn" id="adminLogoutBtn">Logout</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1 class="admin-page-title">Membership Applications</h1>
+        <p class="admin-page-desc">Review and manage Join the Illuminati form submissions.</p>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="stat-grid" id="membershipStats">
+      <div class="stat-card"><div class="value" id="statTotal">&hellip;</div><div class="label">Total Applications</div></div>
+      <div class="stat-card"><div class="value" id="statPending">&hellip;</div><div class="label">Pending Review</div></div>
+      <div class="stat-card"><div class="value" id="statApproved">&hellip;</div><div class="label">Approved</div></div>
+      <div class="stat-card"><div class="value" id="statRejected">&hellip;</div><div class="label">Rejected</div></div>
+    </div>
+
+    <div class="admin-panel">
+      <div class="admin-panel-heading">
+        <h2>All Applications</h2>
+      </div>
+
+      <!-- Filters -->
+      <div class="filter-row" style="padding: 0 1.5rem;">
+        <input type="text" id="searchInput" placeholder="Search by name or email&hellip;" />
+        <select id="statusFilter">
+          <option value="">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table" id="applicationsTable">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Country</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="applicationsBody">
+            <tr><td colspan="5" class="admin-empty">Loading&hellip;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Detail Modal -->
+<div class="detail-overlay" id="detailOverlay" hidden>
+  <div class="detail-modal">
+    <h2 id="modalName">Application Detail</h2>
+    <img class="detail-photo" id="modalPhoto" src="" alt="" hidden />
+    <div id="modalBody"></div>
+    <div class="detail-actions">
+      <label style="color:#c9a84c;font-size:0.85rem;display:flex;align-items:center;gap:0.5rem;">
+        Status:
+        <select class="admin-select-inline" id="modalStatusSelect">
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </label>
+      <button class="btn btn-gold" id="modalSaveBtn">Save Status</button>
+      <button class="btn btn-outline-gold detail-close" id="modalCloseBtn">&times; Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/config.js"></script>
+<script src="../js/admin/membership.js" type="module"></script>
+</body>
+</html>

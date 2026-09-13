@@ -53,73 +53,13 @@
   flex-shrink: 0;
   width: 58px;
   height: 58px;
-  border-radius: 50%;
-  border: 1.5px solid var(--color-gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background: radial-gradient(circle at 35% 30%, rgba(226, 192, 125, 0.18), transparent 70%);
+  object-fit: contain;
 }
 
-.monogram::before {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border: 1px solid rgba(201, 162, 75, 0.4);
-  border-radius: 50%;
-}
-
-.monogram-letter {
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--color-gold-bright);
-  background: linear-gradient(180deg, #f1d9a0 0%, #c9a24b 55%, #8a691f 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Large plain-letter monogram — header context only. Footer/admin keep the
-   compact circular badge defined above. */
+/* Header context sizing */
 .site-header .monogram {
-  width: auto;
-  height: auto;
-  border: none;
-  border-radius: 0;
-  background: none;
-  position: relative;
-  line-height: 1;
-}
-
-.site-header .monogram::before {
-  display: none;
-}
-
-.site-header .monogram-letter {
-  font-size: clamp(64px, 10vw, 108px);
-  line-height: 0.78;
-  font-style: italic;
-  letter-spacing: -0.02em;
-  background: linear-gradient(180deg, #f6e3ae 0%, #e2c07d 32%, #c9a24b 58%, #8a691f 88%, #6b4f18 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.55));
-}
-
-.site-header .monogram-letter::after {
-  content: "\269C";
-  position: absolute;
-  left: 0.06em;
-  bottom: 0.1em;
-  font-size: 0.19em;
-  font-style: normal;
-  color: #8a691f;
-  -webkit-text-fill-color: #8a691f;
-  filter: none;
-  opacity: 0.85;
+  width: 80px;
+  height: 80px;
 }
 
 .brand-text {

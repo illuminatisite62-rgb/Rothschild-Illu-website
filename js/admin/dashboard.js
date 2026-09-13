@@ -7,28 +7,46 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-function formatDateTime(iso) {
+function formatDate(iso) {
   if (!iso) return "—";
-  return new Date(iso).toLocaleString("en-US", { year: "numeric", month: "short", day: "numeric" });
+  return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
+
+/* ------------------------------------------------------------------ */
+/* Stats                                                                */
+/* ------------------------------------------------------------------ */
 
 async function loadStats() {
-  const [total, published, draft, featured, media, timeline] = await Promise.all([
+  if (!supabase) return;
+
+  const [profiles, published, media, timeline, membership, messages] = await Promise.all([
     supabase.from("profiles").select("id", { count: "exact", head: true }),
     supabase.from("profiles").select("id", { count: "exact", head: true }).eq("status", "published"),
-    supabase.from("profiles").select("id", { count: "exact", head: true }).eq("status", "draft"),
-    supabase.from("profiles").select("id", { count: "exact", head: true }).eq("featured", true),
     supabase.from("media").select("id", { count: "exact", head: true }),
     supabase.from("timeline_events").select("id", { count: "exact", head: true }),
+    supabase.from("membership_applications").select("id", { count: "exact", head: true }).eq("status", "pending"),
+    supabase.from("contact_messages").select("id", { count: "exact", head: true }).eq("read", false),
   ]);
 
-  const values = [total.count, published.count, draft.count, featured.count, media.count, timeline.count];
-  document.querySelectorAll("#statGrid .value").forEach((el, i) => {
-    el.textContent = values[i] ?? "0";
-  });
+  const set = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val ?? "0";
+  };
+
+  set("statProfiles",   profiles.count);
+  set("statPublished",  published.count);
+  set("statMedia",      media.count);
+  set("statTimeline",   timeline.count);
+  set("statMembership", membership.count);
+  set("statMessages",   messages.count);
 }
 
+/* ------------------------------------------------------------------ */
+/* Recent Profiles                                                      */
+/* ------------------------------------------------------------------ */
+
 async function loadRecentProfiles() {
+  if (!supabase) return;
   const { data, error } = await supabase
     .from("profiles")
     .select("full_name, status, updated_at")
@@ -36,68 +54,99 @@ async function loadRecentProfiles() {
     .limit(6);
 
   const tbody = document.querySelector("#recentProfilesTable tbody");
+  if (!tbody) return;
 
   if (error) {
-    tbody.innerHTML = `<tr><td colspan="3" class="admin-empty">Could not load profiles: ${escapeHtml(error.message)}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="3" class="admin-empty">Could not load profiles.</td></tr>`;
     return;
   }
-
-  if (!data || data.length === 0) {
+  if (!data || !data.length) {
     tbody.innerHTML = `<tr><td colspan="3" class="admin-empty">No profiles yet. <a href="profile-editor.html">Add the first one</a>.</td></tr>`;
     return;
   }
 
-  tbody.innerHTML = data
-    .map(
-      (p) => `
+  tbody.innerHTML = data.map(p => `
     <tr>
       <td>${escapeHtml(p.full_name)}</td>
-      <td><span class="status-pill ${p.status}">${escapeHtml(p.status)}</span></td>
-      <td>${formatDateTime(p.updated_at)}</td>
+      <td><span class="status-pill ${p.status}">${p.status}</span></td>
+      <td>${formatDate(p.updated_at)}</td>
     </tr>
-  `
-    )
-    .join("");
+  `).join("");
 }
 
+/* ------------------------------------------------------------------ */
+/* Pending Membership                                                   */
+/* ------------------------------------------------------------------ */
+
+async function loadMembershipPending() {
+  if (!supabase) return;
+  const { data, error } = await supabase
+    .from("membership_applications")
+    .select("full_name, email, country, created_at")
+    .eq("status", "pending")
+    .order("created_at", { ascending: false })
+    .limit(6);
+
+  const tbody = document.querySelector("#membershipTable tbody");
+  if (!tbody) return;
+
+  if (error || !data || !data.length) {
+    tbody.innerHTML = `<tr><td colspan="4" class="admin-empty">${error ? "Could not load." : "No pending applications."}</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = data.map(m => `
+    <tr style="cursor:pointer;" onclick="location.href='membership.html'">
+      <td>${escapeHtml(m.full_name)}</td>
+      <td>${escapeHtml(m.email)}</td>
+      <td>${escapeHtml(m.country || "—")}</td>
+      <td>${formatDate(m.created_at)}</td>
+    </tr>
+  `).join("");
+}
+
+/* ------------------------------------------------------------------ */
+/* Unread Contact Messages                                              */
+/* ------------------------------------------------------------------ */
+
 async function loadMessages() {
+  if (!supabase) return;
   const { data, error } = await supabase
     .from("contact_messages")
     .select("name, subject, created_at")
-    .eq("is_read", false)
+    .eq("read", false)
     .order("created_at", { ascending: false })
     .limit(6);
 
   const tbody = document.querySelector("#messagesTable tbody");
+  if (!tbody) return;
 
-  if (error) {
-    tbody.innerHTML = `<tr><td colspan="3" class="admin-empty">Could not load messages: ${escapeHtml(error.message)}</td></tr>`;
+  if (error || !data || !data.length) {
+    tbody.innerHTML = `<tr><td colspan="3" class="admin-empty">${error ? "Could not load." : "No unread messages."}</td></tr>`;
     return;
   }
 
-  if (!data || data.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="3" class="admin-empty">No unread messages.</td></tr>`;
-    return;
-  }
-
-  tbody.innerHTML = data
-    .map(
-      (m) => `
+  tbody.innerHTML = data.map(m => `
     <tr>
       <td>${escapeHtml(m.name)}</td>
-      <td>${escapeHtml(m.subject)}</td>
-      <td>${formatDateTime(m.created_at)}</td>
+      <td>${escapeHtml(m.subject || "—")}</td>
+      <td>${formatDate(m.created_at)}</td>
     </tr>
-  `
-    )
-    .join("");
+  `).join("");
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
+/* ------------------------------------------------------------------ */
+/* Init                                                                 */
+/* ------------------------------------------------------------------ */
+
+document.addEventListener("DOMContentLoaded", async () => {
   const admin = await requireAdmin();
   if (!admin) return;
 
-  loadStats();
-  loadRecentProfiles();
-  loadMessages();
+  await Promise.all([
+    loadStats(),
+    loadRecentProfiles(),
+    loadMembershipPending(),
+    loadMessages(),
+  ]);
 });
