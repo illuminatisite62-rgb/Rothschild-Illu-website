@@ -46,6 +46,55 @@ function initSlugAutoFill() {
   });
 }
 
+async function uploadAdminPhoto(file) {
+  if (!supabase || !file) return null;
+  try {
+    const ext = file.name.split(".").pop();
+    const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+    const { data, error } = await supabase.storage
+      .from("admin-uploads")
+      .upload(fileName, file, { upsert: false, contentType: file.type });
+    if (error) throw error;
+    const { data: publicData } = supabase.storage.from("admin-uploads").getPublicUrl(fileName);
+    return publicData?.publicUrl || null;
+  } catch (err) {
+    console.warn("Upload error:", err);
+    showToast("Failed to upload image.", true);
+    return null;
+  }
+}
+
+function initUploads() {
+  document.getElementById("portraitUpload")?.addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    document.getElementById("portraitUrl").value = "Uploading...";
+    const url = await uploadAdminPhoto(file);
+    if (url) {
+      document.getElementById("portraitUrl").value = url;
+      const preview = document.getElementById("portraitPreview");
+      if (preview) {
+        preview.src = url;
+        preview.hidden = false;
+      }
+    } else {
+      document.getElementById("portraitUrl").value = "";
+    }
+  });
+
+  document.getElementById("coverUpload")?.addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    document.getElementById("coverImageUrl").value = "Uploading...";
+    const url = await uploadAdminPhoto(file);
+    if (url) {
+      document.getElementById("coverImageUrl").value = url;
+    } else {
+      document.getElementById("coverImageUrl").value = "";
+    }
+  });
+}
+
 /* ---------------------------------------------------------------------- */
 /* Repeatable row builders: relationships, gallery images, sources         */
 /* ---------------------------------------------------------------------- */
@@ -182,6 +231,7 @@ async function loadExistingProfile(id) {
   setVal("titles", profile.titles);
   setVal("portraitUrl", profile.portrait_url);
   setVal("coverImageUrl", profile.cover_image_url);
+  setVal("facebookUrl", profile.facebook_url);
 
   const portraitPreview = document.getElementById("portraitPreview");
   if (profile.portrait_url) {
@@ -244,6 +294,7 @@ function collectProfilePayload(status) {
     titles: val("titles") || null,
     portrait_url: val("portraitUrl") || null,
     cover_image_url: val("coverImageUrl") || null,
+    facebook_url: val("facebookUrl") || null,
     short_bio: val("shortBio") || null,
     full_bio: val("fullBio") || null,
     early_life: val("earlyLife") || null,
@@ -355,6 +406,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   initTabs();
   initSlugAutoFill();
+  initUploads();
   initButtons();
 
   await loadProfilePickerList();

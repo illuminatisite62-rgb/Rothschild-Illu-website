@@ -19,13 +19,14 @@ function formatDate(iso) {
 async function loadStats() {
   if (!supabase) return;
 
-  const [profiles, published, media, timeline, membership, messages] = await Promise.all([
+  const [profiles, published, media, timeline, membership, messages, visitors] = await Promise.all([
     supabase.from("profiles").select("id", { count: "exact", head: true }),
     supabase.from("profiles").select("id", { count: "exact", head: true }).eq("status", "published"),
     supabase.from("media").select("id", { count: "exact", head: true }),
     supabase.from("timeline_events").select("id", { count: "exact", head: true }),
     supabase.from("membership_applications").select("id", { count: "exact", head: true }).eq("status", "pending"),
     supabase.from("contact_messages").select("id", { count: "exact", head: true }).eq("read", false),
+    supabase.from("site_visitors").select("id", { count: "exact", head: true }),
   ]);
 
   const set = (id, val) => {
@@ -38,6 +39,7 @@ async function loadStats() {
   set("statMedia",      media.count);
   set("statTimeline",   timeline.count);
   set("statMembership", membership.count);
+  set("statVisitors",   visitors.count);
   set("statMessages",   messages.count);
 }
 
@@ -106,6 +108,37 @@ async function loadMembershipPending() {
 }
 
 /* ------------------------------------------------------------------ */
+/* Registered Visitors                                                  */
+/* ------------------------------------------------------------------ */
+
+async function loadVisitors() {
+  if (!supabase) return;
+  const { data, error } = await supabase
+    .from("site_visitors")
+    .select("name, email, phone, birthday, created_at")
+    .order("created_at", { ascending: false })
+    .limit(6);
+
+  const tbody = document.querySelector("#visitorsTable tbody");
+  if (!tbody) return;
+
+  if (error || !data || !data.length) {
+    tbody.innerHTML = `<tr><td colspan="5" class="admin-empty">${error ? "Could not load." : "No registered visitors."}</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = data.map(v => `
+    <tr>
+      <td>${escapeHtml(v.name)}</td>
+      <td>${escapeHtml(v.email)}</td>
+      <td>${escapeHtml(v.phone || "—")}</td>
+      <td>${escapeHtml(v.birthday || "—")}</td>
+      <td>${formatDate(v.created_at)}</td>
+    </tr>
+  `).join("");
+}
+
+/* ------------------------------------------------------------------ */
 /* Unread Contact Messages                                              */
 /* ------------------------------------------------------------------ */
 
@@ -147,6 +180,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadStats(),
     loadRecentProfiles(),
     loadMembershipPending(),
+    loadVisitors(),
     loadMessages(),
   ]);
 });

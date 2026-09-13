@@ -52,6 +52,7 @@ create table if not exists profiles (
   quotes             text,
   seo_title          text,
   seo_description    text,
+  facebook_url       text,
   featured           boolean not null default false,
   status             text not null default 'draft' check (status in ('draft','published')),
   published_at       timestamptz,
@@ -242,6 +243,7 @@ create table if not exists site_visitors (
   name       text not null,
   email      text not null unique,
   phone      text,
+  birthday   text,
   country    text,
   created_at timestamptz not null default now()
 );

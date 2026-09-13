@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -122,15 +122,22 @@
               </div>
               <div class="admin-form-row">
                 <div class="admin-form-field">
-                  <label for="portraitUrl">Portrait URL</label>
+                  <label for="portraitUpload">Portrait Image</label>
                   <img id="portraitPreview" class="thumb-preview" src="../assets/images/05_archival_family_photo.jpg" alt="" hidden />
-                  <input type="text" id="portraitUrl" placeholder="assets/images/... or a Storage URL" />
-                  <span class="hint">Upload the file in the Media Library, then paste its URL here.</span>
+                  <input type="file" id="portraitUpload" accept="image/*" />
+                  <input type="text" id="portraitUrl" placeholder="Image URL will appear here" readonly style="margin-top: 8px; opacity: 0.7; font-size: 0.85em;" />
+                  <span class="hint">Upload an image directly from your computer.</span>
                 </div>
                 <div class="admin-form-field">
-                  <label for="coverImageUrl">Cover Image URL</label>
-                  <input type="text" id="coverImageUrl" placeholder="assets/images/... or a Storage URL" />
+                  <label for="coverUpload">Cover Image</label>
+                  <input type="file" id="coverUpload" accept="image/*" />
+                  <input type="text" id="coverImageUrl" placeholder="Image URL will appear here" readonly style="margin-top: 8px; opacity: 0.7; font-size: 0.85em;" />
                 </div>
+              </div>
+              <div class="admin-form-field">
+                <label for="facebookUrl">Facebook Profile URL</label>
+                <input type="url" id="facebookUrl" placeholder="https://facebook.com/..." />
+                <span class="hint">Optional link to the member's Facebook page.</span>
               </div>
             </div>
           </section>

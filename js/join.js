@@ -132,10 +132,11 @@ async function handleAccountSubmit(e) {
 
   const name    = document.getElementById("accName")?.value.trim();
   const email   = document.getElementById("accEmail")?.value.trim();
-  const phone   = document.getElementById("accPhone")?.value.trim() || null;
-  const country = document.getElementById("accCountry")?.value.trim() || null;
-  const btn     = document.getElementById("joinAccountBtn");
-  const success = document.getElementById("joinAccountSuccess");
+  const phone    = document.getElementById("accPhone")?.value.trim() || null;
+  const birthday = document.getElementById("accBirthday")?.value.trim() || null;
+  const country  = document.getElementById("accCountry")?.value.trim() || null;
+  const btn      = document.getElementById("joinAccountBtn");
+  const success  = document.getElementById("joinAccountSuccess");
 
   if (!name || !email) {
     alert("Please enter your name and email to create an account.");
@@ -146,7 +147,7 @@ async function handleAccountSubmit(e) {
 
   try {
     if (supabase) {
-      await supabase.from("site_visitors").upsert({ name, email, phone, country }, { onConflict: "email" });
+      await supabase.from("site_visitors").upsert({ name, email, phone, birthday, country }, { onConflict: "email" });
     }
     if (success) success.hidden = false;
     if (btn) { btn.hidden = true; }

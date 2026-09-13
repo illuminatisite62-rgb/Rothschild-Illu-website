@@ -312,6 +312,7 @@ function renderProfile(profile) {
             <h1 class="profile-name">${escapeHtml(profile.full_name)}</h1>
             ${profile.alternative_names ? `<p class="profile-alt-names">also known as ${escapeHtml(profile.alternative_names)}</p>` : ""}
             ${tags.length ? `<div class="profile-tags">${tags.map((t) => `<span class="profile-tag">${escapeHtml(t)}</span>`).join("")}</div>` : ""}
+            ${profile.facebook_url ? `<div style="margin-top: 1.2rem;"><a href="${escapeHtml(profile.facebook_url)}" target="_blank" rel="noopener noreferrer" style="color: #c9a84c; text-decoration: none; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.5rem; letter-spacing: 0.05em;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg> Official Facebook Profile</a></div>` : ""}
           </div>
         </div>
       </div>
