@@ -27,7 +27,7 @@ function setSubmitting(isSubmitting) {
   const text = document.getElementById("joinSubmitText");
   if (!btn) return;
   btn.disabled = isSubmitting;
-  text.textContent = isSubmitting ? "Submitting…" : "SUBMIT APPLICATION";
+  text.textContent = isSubmitting ? "Sending…" : "SUBMIT APPLICATION";
 }
 
 function showSuccess() {
@@ -36,7 +36,38 @@ function showSuccess() {
   const account = document.getElementById("joinAccountSection");
   if (form)    form.hidden    = true;
   if (success) success.hidden = false;
-  if (account) account.hidden = false; // reveal optional account block
+  if (account) account.hidden = false;
+}
+
+/* Save pending application to localStorage in case DB is still waking up */
+function savePending(data) {
+  try {
+    const pending = JSON.parse(localStorage.getItem("roth_pending_apps") || "[]");
+    pending.push({ ...data, savedAt: Date.now() });
+    localStorage.setItem("roth_pending_apps", JSON.stringify(pending));
+  } catch (e) { /* ignore */ }
+}
+
+/* Try to flush any pending applications that didn't save before */
+async function flushPending() {
+  if (!supabase) return;
+  try {
+    const raw = localStorage.getItem("roth_pending_apps");
+    if (!raw) return;
+    const pending = JSON.parse(raw);
+    if (!pending.length) return;
+    const remaining = [];
+    for (const app of pending) {
+      const { savedAt, ...payload } = app;
+      const { error } = await supabase.from("membership_applications").insert(payload);
+      if (error) remaining.push(app);
+    }
+    if (remaining.length) {
+      localStorage.setItem("roth_pending_apps", JSON.stringify(remaining));
+    } else {
+      localStorage.removeItem("roth_pending_apps");
+    }
+  } catch (e) { /* ignore */ }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -90,52 +121,54 @@ async function handleApplicationSubmit(e) {
   if (!phone)    { showError("Please enter your phone number."); return; }
   if (!email || !email.includes("@")) { showError("Please enter a valid email address."); return; }
 
-  setSubmitting(true);
+  const payload = {
+    full_name:  fullName,
+    phone:      phone,
+    email:      email,
+    photo_url:  null,
+    occupation: occupation,
+    country:    country,
+    reason:     reason,
+    status:     "pending",
+  };
 
-  try {
-    // 1. Save application to Supabase FIRST (don't block on photo upload)
-    if (supabase) {
-      const { error } = await supabase.from("membership_applications").insert({
-        full_name:   fullName,
-        phone:       phone,
-        email:       email,
-        photo_url:   null,         // will be updated once upload completes
-        occupation:  occupation,
-        country:     country,
-        reason:      reason,
-        status:      "pending",
-      });
+  // ── Show success INSTANTLY — do not make the user wait for the database ──
+  // The DB might be waking from sleep (Supabase free tier). Save happens in background.
+  showSuccess();
 
-      if (error) {
-        console.error("[Join] Insert error:", error);
-        showError("There was a problem saving your application. Please try again or contact us directly at contact@davidrenederothschild.com");
-        setSubmitting(false);
-        return;
+  // ── Save to DB silently in background ──
+  setTimeout(async () => {
+    try {
+      if (supabase) {
+        const { error } = await supabase.from("membership_applications").insert(payload);
+        if (error) {
+          console.warn("[Join] DB save failed, queuing locally:", error.message);
+          savePending(payload);
+        } else {
+          console.log("[Join] Application saved to database.");
+        }
+      } else {
+        savePending(payload);
+        console.log("[Join] Supabase not configured — saved locally.");
       }
-    } else {
-      // Supabase not configured — log to console for development
-      console.log("[Join] Application (Supabase not configured):", { fullName, phone, email, occupation, country, reason });
+    } catch (err) {
+      console.warn("[Join] Unexpected error saving application:", err);
+      savePending(payload);
     }
 
-    // 2. Show success immediately — don't keep user waiting for photo upload
-    showSuccess();
-
-    // 3. Try to upload photo in background and update the record
+    // Upload photo in background too
     if (photoFile && supabase) {
       uploadPhoto(photoFile).then(async (photoUrl) => {
         if (photoUrl) {
           await supabase
             .from("membership_applications")
             .update({ photo_url: photoUrl })
-            .eq("email", email);
+            .eq("email", email)
+            .catch(() => {});
         }
       }).catch(() => {});
     }
-  } catch (err) {
-    console.error("[Join] Unexpected error:", err);
-    showError("An unexpected error occurred. Please try again.");
-    setSubmitting(false);
-  }
+  }, 0); // setTimeout(0) defers after UI update renders
 }
 
 /* -------------------------------------------------------------------------- */
@@ -197,4 +230,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (accForm) accForm.addEventListener("submit", handleAccountSubmit);
 
   initFileLabel();
+
+  // Retry any applications that failed to reach the DB on a previous visit
+  // (e.g. due to Supabase cold start). Runs silently after a short delay.
+  setTimeout(flushPending, 3000);
 });
