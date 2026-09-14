@@ -195,12 +195,12 @@ function clearForm() {
 
 function openDeleteConfirm(id) {
   deletingId = id;
-  document.getElementById("deleteOverlay").hidden = false;
+  document.getElementById("deleteOverlay").classList.add("show");
 }
 
 function closeDeleteConfirm() {
   deletingId = null;
-  document.getElementById("deleteOverlay").hidden = true;
+  document.getElementById("deleteOverlay").classList.remove("show");
 }
 
 async function confirmDelete() {

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -160,7 +160,19 @@
         </select>
       </label>
       <button class="btn btn-gold" id="modalSaveBtn">Save Status</button>
+      <button class="btn" style="border: 1px solid var(--color-wax-red); color: var(--color-wax-red); background: transparent;" id="modalDeleteBtn">Delete</button>
       <button class="btn btn-outline-gold detail-close" id="modalCloseBtn">&times; Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm delete modal -->
+<div class="admin-modal-overlay" id="deleteOverlay">
+  <div class="admin-modal">
+    <p>Are you sure you want to delete this application? This cannot be undone.</p>
+    <div class="admin-modal-actions">
+      <button class="btn btn-gold" id="confirmDeleteBtn">Delete</button>
+      <button class="btn btn-outline-gold" id="cancelDeleteBtn">Cancel</button>
     </div>
   </div>
 </div>

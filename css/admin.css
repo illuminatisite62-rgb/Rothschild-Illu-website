@@ -606,3 +606,141 @@ body.admin-body {
 .upload-dropzone input[type="file"] {
   display: none;
 }
+
+/* ---------- Admin Modals ---------- */
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: none; /* hidden by default */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.admin-modal-overlay.show {
+  display: flex;
+}
+
+.admin-modal {
+  background: var(--color-navy-deep);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 32px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-deep);
+}
+
+.admin-modal p {
+  color: var(--color-parchment-light);
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  margin: 0 0 24px;
+}
+
+.admin-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.admin-modal-actions .btn {
+  min-width: 0; /* override huge global button width */
+  padding: 12px 24px;
+}
+
+/* ---------- Mobile Responsiveness ---------- */
+@media (max-width: 900px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+  
+  .admin-sidebar {
+    padding: 16px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .admin-sidebar-brand {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+  
+  .admin-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .admin-nav a {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  
+  .admin-sidebar-foot {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .admin-user-email {
+    margin-bottom: 0;
+  }
+  
+  .admin-logout-btn {
+    width: auto;
+  }
+  
+  .admin-main {
+    padding: 24px 16px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-form-row,
+  .admin-form-row--3,
+  .editor-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .editor-tabs {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+    padding-bottom: 16px;
+  }
+  
+  .editor-tab-btn {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .admin-panel {
+    padding: 20px 16px;
+  }
+  
+  /* Make tables horizontally scrollable without breaking page width */
+  .admin-table-wrap {
+    margin: 0 -16px; /* bleed to edge */
+    padding: 0 16px;
+  }
+  
+  .admin-table {
+    min-width: 600px; /* force scrolling if small */
+  }
+}

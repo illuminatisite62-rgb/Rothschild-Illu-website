@@ -8,6 +8,7 @@ import { requireAdmin } from "./auth.js";
 
 let allApplications = [];
 let currentId = null;
+let deletingId = null;
 
 /* ------------------------------------------------------------------ */
 /* Format helpers                                                       */
@@ -146,6 +147,22 @@ async function saveStatus() {
   closeDetail();
 }
 
+async function confirmDelete() {
+  if (!deletingId || !supabase) return;
+  const { error } = await supabase.from("membership_applications").delete().eq("id", deletingId);
+  document.getElementById("deleteOverlay").classList.remove("show");
+  
+  if (error) {
+    alert("Failed to delete application: " + error.message);
+    return;
+  }
+  
+  allApplications = allApplications.filter(a => a.id !== deletingId);
+  applyFilters();
+  updateStats(allApplications);
+  closeDetail();
+}
+
 /* ------------------------------------------------------------------ */
 /* Load                                                                 */
 /* ------------------------------------------------------------------ */
@@ -188,6 +205,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("statusFilter").addEventListener("change", applyFilters);
   document.getElementById("modalCloseBtn").addEventListener("click", closeDetail);
   document.getElementById("modalSaveBtn").addEventListener("click", saveStatus);
+  document.getElementById("modalDeleteBtn").addEventListener("click", () => {
+    deletingId = currentId;
+    document.getElementById("deleteOverlay").classList.add("show");
+  });
+  document.getElementById("confirmDeleteBtn").addEventListener("click", confirmDelete);
+  document.getElementById("cancelDeleteBtn").addEventListener("click", () => {
+    document.getElementById("deleteOverlay").classList.remove("show");
+    deletingId = null;
+  });
   document.getElementById("detailOverlay").addEventListener("click", e => {
     if (e.target === document.getElementById("detailOverlay")) closeDetail();
   });
