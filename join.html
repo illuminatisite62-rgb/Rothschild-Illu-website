@@ -224,8 +224,7 @@
           <p>Your application has been submitted successfully. You will be contacted directly within 48 hours with further instructions. Welcome to the path.</p>
         </div>
 
-        <!-- Error Banner -->
-        <div class="join-error-banner" id="joinErrorBanner" hidden></div>
+        <!-- Error Banner removed from here — moved to near submit button -->
 
         <form class="join-form" id="joinForm" novalidate>
           <div class="join-field">
@@ -259,6 +258,10 @@
           <div class="join-field join-field--full">
             <label for="joinReason">Why do you wish to join the Rothschild Illuminati?</label>
             <textarea id="joinReason" name="reason" rows="5" placeholder="Describe your motivations, your vision, and what you hope to contribute to our shared global mission…"></textarea>
+          </div>
+          <div class="join-field join-field--full">
+            <!-- Error Banner moved here — right above submit so it's always visible -->
+            <div class="join-error-banner" id="joinErrorBanner" hidden></div>
           </div>
           <div class="join-field join-field--full">
             <button type="submit" class="join-submit-btn" id="joinSubmitBtn">

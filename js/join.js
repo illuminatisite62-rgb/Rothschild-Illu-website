@@ -9,17 +9,34 @@ import { supabase } from "./supabase-client.js";
 /* Helpers                                                                     */
 /* -------------------------------------------------------------------------- */
 
-function showError(msg) {
+function showError(msg, fieldId) {
   const banner = document.getElementById("joinErrorBanner");
   if (!banner) return;
-  banner.textContent = msg;
+  banner.textContent = "\u26A0 " + msg;
   banner.hidden = false;
-  banner.scrollIntoView({ behavior: "smooth", block: "center" });
+  // Highlight the offending field in red
+  if (fieldId) {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      field.style.borderColor = "#c0392b";
+      field.style.boxShadow = "0 0 0 2px rgba(192,57,43,0.35)";
+      field.focus();
+      field.addEventListener("input", () => {
+        field.style.borderColor = "";
+        field.style.boxShadow = "";
+      }, { once: true });
+    }
+  }
 }
 
 function hideError() {
   const banner = document.getElementById("joinErrorBanner");
   if (banner) banner.hidden = true;
+  // Clear any field highlights
+  ["joinFullName", "joinPhone", "joinEmail"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.style.borderColor = ""; el.style.boxShadow = ""; }
+  });
 }
 
 function setSubmitting(isSubmitting) {
@@ -116,10 +133,10 @@ async function handleApplicationSubmit(e) {
   const country    = document.getElementById("joinCountry")?.value.trim() || null;
   const reason     = document.getElementById("joinReason")?.value.trim() || null;
 
-  // Basic validation
-  if (!fullName) { showError("Please enter your full name."); return; }
-  if (!phone)    { showError("Please enter your phone number."); return; }
-  if (!email || !email.includes("@")) { showError("Please enter a valid email address."); return; }
+  // Basic validation — pass the field ID so it gets highlighted in red
+  if (!fullName) { showError("Please enter your full name.", "joinFullName"); return; }
+  if (!phone)    { showError("Please enter your phone number.", "joinPhone"); return; }
+  if (!email || !email.includes("@")) { showError("Please enter a valid email address.", "joinEmail"); return; }
 
   const payload = {
     full_name:  fullName,
