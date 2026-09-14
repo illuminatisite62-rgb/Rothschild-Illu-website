@@ -45,22 +45,28 @@ function showSuccess() {
 
 async function uploadPhoto(file) {
   if (!supabase || !file) return null;
-  try {
-    const ext      = file.name.split(".").pop();
-    const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-    const { data, error } = await supabase.storage
-      .from("membership-photos")
-      .upload(fileName, file, { upsert: false, contentType: file.type });
-    if (error) {
-      console.warn("[Join] Photo upload error:", error.message);
+  // Wrap upload in a race against a 8-second timeout
+  const uploadPromise = (async () => {
+    try {
+      const ext      = file.name.split(".").pop();
+      const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error } = await supabase.storage
+        .from("membership-photos")
+        .upload(fileName, file, { upsert: false, contentType: file.type });
+      if (error) {
+        console.warn("[Join] Photo upload error:", error.message);
+        return null;
+      }
+      const { data: publicData } = supabase.storage.from("membership-photos").getPublicUrl(fileName);
+      return publicData?.publicUrl || null;
+    } catch (err) {
+      console.warn("[Join] Photo upload exception:", err);
       return null;
     }
-    const { data: publicData } = supabase.storage.from("membership-photos").getPublicUrl(fileName);
-    return publicData?.publicUrl || null;
-  } catch (err) {
-    console.warn("[Join] Photo upload exception:", err);
-    return null;
-  }
+  })();
+
+  const timeoutPromise = new Promise((resolve) => setTimeout(() => resolve(null), 8000));
+  return Promise.race([uploadPromise, timeoutPromise]);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -87,16 +93,13 @@ async function handleApplicationSubmit(e) {
   setSubmitting(true);
 
   try {
-    // 1. Upload photo (non-blocking — if it fails, we still save the form)
-    const photoUrl = await uploadPhoto(photoFile);
-
-    // 2. Save to Supabase
+    // 1. Save application to Supabase FIRST (don't block on photo upload)
     if (supabase) {
       const { error } = await supabase.from("membership_applications").insert({
         full_name:   fullName,
         phone:       phone,
         email:       email,
-        photo_url:   photoUrl,
+        photo_url:   null,         // will be updated once upload completes
         occupation:  occupation,
         country:     country,
         reason:      reason,
@@ -105,8 +108,7 @@ async function handleApplicationSubmit(e) {
 
       if (error) {
         console.error("[Join] Insert error:", error);
-        // Still show success to user — data may have partially saved or there's a transient error
-        showError("There was a problem saving your application. Please try again or contact us directly.");
+        showError("There was a problem saving your application. Please try again or contact us directly at contact@davidrenederothschild.com");
         setSubmitting(false);
         return;
       }
@@ -115,7 +117,20 @@ async function handleApplicationSubmit(e) {
       console.log("[Join] Application (Supabase not configured):", { fullName, phone, email, occupation, country, reason });
     }
 
+    // 2. Show success immediately — don't keep user waiting for photo upload
     showSuccess();
+
+    // 3. Try to upload photo in background and update the record
+    if (photoFile && supabase) {
+      uploadPhoto(photoFile).then(async (photoUrl) => {
+        if (photoUrl) {
+          await supabase
+            .from("membership_applications")
+            .update({ photo_url: photoUrl })
+            .eq("email", email);
+        }
+      }).catch(() => {});
+    }
   } catch (err) {
     console.error("[Join] Unexpected error:", err);
     showError("An unexpected error occurred. Please try again.");

@@ -48,50 +48,71 @@ function initSlugAutoFill() {
 
 async function uploadAdminPhoto(file) {
   if (!supabase || !file) return null;
+  const MAX_BYTES = 10 * 1024 * 1024; // 10 MB
+  if (file.size > MAX_BYTES) {
+    showToast("Image is too large. Please use an image under 10 MB.", true);
+    return null;
+  }
   try {
-    const ext = file.name.split(".").pop();
-    const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-    const { data, error } = await supabase.storage
+    const ext = file.name.split(".").pop().toLowerCase();
+    const safeExts = ["jpg", "jpeg", "png", "webp", "gif", "avif"];
+    if (!safeExts.includes(ext)) {
+      showToast("Unsupported file type. Use JPG, PNG, or WebP.", true);
+      return null;
+    }
+    const fileName = `profiles/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+    const { error } = await supabase.storage
       .from("admin-uploads")
       .upload(fileName, file, { upsert: false, contentType: file.type });
     if (error) throw error;
     const { data: publicData } = supabase.storage.from("admin-uploads").getPublicUrl(fileName);
     return publicData?.publicUrl || null;
   } catch (err) {
-    console.warn("Upload error:", err);
-    showToast("Failed to upload image.", true);
+    console.warn("Upload error:", err.message || err);
+    showToast(`Upload failed: ${err.message || "Storage bucket may not be set up yet. Please run supabase/storage-policies.sql in your Supabase SQL editor."}`, true);
     return null;
   }
 }
 
 function initUploads() {
+  function handleUploadResult(urlFieldId, previewId, url) {
+    const urlField = document.getElementById(urlFieldId);
+    if (url) {
+      if (urlField) {
+        urlField.value = url;
+        urlField.readOnly = true;
+        urlField.style.opacity = "0.7";
+      }
+      const preview = previewId ? document.getElementById(previewId) : null;
+      if (preview) { preview.src = url; preview.hidden = false; }
+      showToast("Image uploaded successfully.");
+    } else {
+      // Upload failed — let admin type/paste a URL manually as fallback
+      if (urlField) {
+        urlField.value = "";
+        urlField.readOnly = false;
+        urlField.style.opacity = "1";
+        urlField.placeholder = "Upload failed — paste an image URL here instead";
+      }
+    }
+  }
+
   document.getElementById("portraitUpload")?.addEventListener("change", async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    document.getElementById("portraitUrl").value = "Uploading...";
+    const urlField = document.getElementById("portraitUrl");
+    if (urlField) { urlField.value = "Uploading..."; urlField.readOnly = true; }
     const url = await uploadAdminPhoto(file);
-    if (url) {
-      document.getElementById("portraitUrl").value = url;
-      const preview = document.getElementById("portraitPreview");
-      if (preview) {
-        preview.src = url;
-        preview.hidden = false;
-      }
-    } else {
-      document.getElementById("portraitUrl").value = "";
-    }
+    handleUploadResult("portraitUrl", "portraitPreview", url);
   });
 
   document.getElementById("coverUpload")?.addEventListener("change", async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    document.getElementById("coverImageUrl").value = "Uploading...";
+    const urlField = document.getElementById("coverImageUrl");
+    if (urlField) { urlField.value = "Uploading..."; urlField.readOnly = true; }
     const url = await uploadAdminPhoto(file);
-    if (url) {
-      document.getElementById("coverImageUrl").value = url;
-    } else {
-      document.getElementById("coverImageUrl").value = "";
-    }
+    handleUploadResult("coverImageUrl", null, url);
   });
 }
 
