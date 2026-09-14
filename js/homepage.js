@@ -9,6 +9,7 @@ function initVideoModal() {
   const playButton = document.getElementById("playButton");
   const modal = document.getElementById("videoModal");
   const closeBtn = document.getElementById("videoModalClose");
+  const modalMessage = document.getElementById("videoModalMessage");
   if (!playButton || !modal) return;
 
   playButton.addEventListener("click", function () {
@@ -17,6 +18,10 @@ function initVideoModal() {
 
   function close() {
     modal.setAttribute("data-open", "false");
+    // Clear iframe to stop video playback
+    if (modalMessage) {
+      modalMessage.innerHTML = "";
+    }
   }
 
   closeBtn?.addEventListener("click", close);
@@ -245,10 +250,12 @@ function initVideoModalContent() {
   if (!playButton || !modalMessage) return;
 
   playButton.addEventListener("click", () => {
-    const videoUrl = playButton.getAttribute("data-video-url");
-    if (videoUrl) {
-      modalMessage.innerHTML = `<a href="${escapeHtml(videoUrl)}" target="_blank" rel="noopener noreferrer" style="color: var(--color-gold-bright); border-bottom: 1px solid var(--color-gold);">Watch the archival footage &rsaquo;</a>`;
-    }
+    // Embed the requested YouTube video with autoplay
+    modalMessage.innerHTML = `
+      <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/zmotKKgVBYM?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="aspect-ratio: 16/9; max-width: 900px; width: 90vw; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);"></iframe>
+      </div>
+    `;
   });
 }
 
