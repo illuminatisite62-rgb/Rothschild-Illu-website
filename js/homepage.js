@@ -33,7 +33,8 @@ function escapeHtml(str) {
 
 function lifespan(birth, death) {
   const b = birth ? new Date(birth).getFullYear() : "?";
-  const d = death ? new Date(death).getFullYear() : "Present";
+  if (!death) return `b. ${b}`;
+  const d = new Date(death).getFullYear();
   return `${b} &ndash; ${d}`;
 }
 
@@ -48,7 +49,7 @@ async function loadFeaturedProfiles() {
     .eq("status", "published")
     .eq("featured", true)
     .order("published_at", { ascending: false })
-    .limit(3);
+    .limit(5);
 
   if (error) {
     console.warn("[Rothschild] Could not load featured profiles:", error.message);
