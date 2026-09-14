@@ -161,6 +161,82 @@ async function loadHomepageContent() {
     const playButton = document.getElementById("playButton");
     playButton?.setAttribute("data-video-url", data.video_url);
   }
+
+  if (data.tree_json) {
+    await renderFamilyTree(data.tree_json);
+  } else {
+    document.getElementById("dynamicFamilyTree").innerHTML = `<p style="text-align: center; opacity: 0.5; padding: 2rem;">Family tree not configured.</p>`;
+  }
+}
+
+async function renderFamilyTree(treeJson) {
+  const container = document.getElementById("dynamicFamilyTree");
+  if (!container || !supabase) return;
+
+  if (!treeJson || !treeJson.founder) {
+    container.innerHTML = `<p style="text-align: center; opacity: 0.5; padding: 2rem;">Family tree not configured.</p>`;
+    return;
+  }
+
+  const slugs = [treeJson.founder, ...(treeJson.children || [])].filter(Boolean);
+  const { data: profiles, error } = await supabase
+    .from("profiles")
+    .select("slug, full_name, birth_date, death_date, family_branch, portrait_url, occupation")
+    .in("slug", slugs);
+
+  if (error || !profiles) {
+    container.innerHTML = `<p style="text-align: center; opacity: 0.5; padding: 2rem;">Could not load tree data.</p>`;
+    return;
+  }
+
+  const profileMap = {};
+  profiles.forEach(p => profileMap[p.slug] = p);
+
+  const founder = profileMap[treeJson.founder];
+  if (!founder) return;
+
+  const children = (treeJson.children || []).map(slug => profileMap[slug]).filter(Boolean);
+
+  const renderNode = (p, isFounder) => {
+    let mediaHtml = `<div class="tree-node-monogram" aria-hidden="true">${p.full_name.charAt(0)}</div>`;
+    if (p.portrait_url) {
+      mediaHtml = `<img src="${escapeHtml(p.portrait_url)}" alt="${escapeHtml(p.full_name)}" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover; margin: 0 auto 16px; display: block; border: 1px solid rgba(201, 168, 76, 0.4);" />`;
+    }
+
+    return `
+      <div class="tree-node ${isFounder ? 'tree-node--founder' : ''}">
+        ${mediaHtml}
+        <p class="tree-node-name">${escapeHtml(p.full_name)}</p>
+        <p class="tree-node-dates">${lifespan(p.birth_date, p.death_date)}</p>
+        <p class="tree-node-role">${escapeHtml(p.occupation || "Member")} ${p.family_branch ? '&middot; ' + escapeHtml(p.family_branch) : ''}</p>
+        <a href="profile.html?slug=${encodeURIComponent(p.slug)}" class="tree-node-link">View profile</a>
+      </div>
+    `;
+  };
+
+  const html = `
+    <!-- Generation 0: Founder -->
+    <div class="tree-gen-0">
+      ${renderNode(founder, true)}
+    </div>
+
+    ${children.length > 0 ? `
+    <div class="tree-connector-v" aria-hidden="true"></div>
+    <div class="tree-h-bar-wrap" aria-hidden="true"><div class="tree-h-bar"></div></div>
+
+    <!-- Generation 1: Children -->
+    <div class="tree-gen-1">
+      ${children.map(child => `
+        <div class="tree-gen-1-item">
+          <div class="tree-tick" aria-hidden="true"></div>
+          ${renderNode(child, false)}
+        </div>
+      `).join("")}
+    </div>
+    ` : ""}
+  `;
+
+  container.innerHTML = html;
 }
 
 function initVideoModalContent() {

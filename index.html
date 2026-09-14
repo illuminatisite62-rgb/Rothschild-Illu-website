@@ -257,65 +257,10 @@
         </p>
       </div>
 
-      <div class="family-tree-diagram" role="img" aria-label="Rothschild family tree showing Mayer Amschel and his five sons">
-
-        <!-- Generation 0: Founder -->
-        <div class="tree-gen-0">
-          <div class="tree-node tree-node--founder">
-            <div class="tree-node-monogram" aria-hidden="true">M</div>
-            <p class="tree-node-name">Mayer Amschel Rothschild</p>
-            <p class="tree-node-dates">1744 &ndash; 1812</p>
-            <p class="tree-node-role">Founder &middot; Frankfurt</p>
-            <a href="profile.html?slug=mayer-amschel-rothschild" class="tree-node-link">View profile</a>
-          </div>
-        </div>
-
-        <div class="tree-connector-v" aria-hidden="true"></div>
-        <div class="tree-h-bar-wrap" aria-hidden="true"><div class="tree-h-bar"></div></div>
-
-        <!-- Generation 1: Five sons -->
-        <div class="tree-gen-1">
-          <div class="tree-gen-1-item">
-            <div class="tree-tick" aria-hidden="true"></div>
-            <div class="tree-node">
-              <div class="tree-node-monogram" aria-hidden="true">A</div>
-              <p class="tree-node-name">Amschel Mayer</p>
-              <p class="tree-node-dates">1773 &ndash; 1855</p>
-              <p class="tree-node-role">Frankfurt Branch</p>
-            </div>
-          </div>
-          <div class="tree-gen-1-item">
-            <div class="tree-tick" aria-hidden="true"></div>
-            <div class="tree-node">
-              <div class="tree-node-monogram" aria-hidden="true">S</div>
-              <p class="tree-node-name">Salomon Mayer</p>
-              <p class="tree-node-dates">1774 &ndash; 1855</p>
-              <p class="tree-node-role">Vienna Branch</p>
-              <a href="profile.html?slug=salomon-mayer-rothschild" class="tree-node-link">View profile</a>
-            </div>
-          </div>
-          <div class="tree-gen-1-item">
-            <div class="tree-tick" aria-hidden="true"></div>
-            <div class="tree-node">
-              <div class="tree-node-monogram" aria-hidden="true">N</div>
-              <p class="tree-node-name">Nathan Mayer</p>
-              <p class="tree-node-dates">1777 &ndash; 1836</p>
-              <p class="tree-node-role">London Branch</p>
-              <a href="profile.html?slug=nathan-mayer-rothschild" class="tree-node-link">View profile</a>
-            </div>
-          </div>
-          <div class="tree-gen-1-item">
-            <div class="tree-tick" aria-hidden="true"></div>
-            <div class="tree-node">
-              <div class="tree-node-monogram" aria-hidden="true">J</div>
-              <p class="tree-node-name">James Mayer</p>
-              <p class="tree-node-dates">1792 &ndash; 1868</p>
-              <p class="tree-node-role">Paris Branch</p>
-              <a href="profile.html?slug=james-mayer-de-rothschild" class="tree-node-link">View profile</a>
-            </div>
-          </div>
-        </div>
-
+      <div class="family-tree-diagram" id="dynamicFamilyTree" role="img" aria-label="Rothschild family tree">
+        <!-- Tree will be rendered here dynamically by js/homepage.js -->
+        <!-- Fallback while loading: -->
+        <p style="text-align: center; opacity: 0.5; padding: 2rem;">Loading family tree...</p>
       </div>
 
       <div class="family-tree-cta">

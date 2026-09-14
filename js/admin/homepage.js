@@ -16,7 +16,26 @@ function val(id) {
   return document.getElementById(id).value.trim();
 }
 
+let allProfiles = [];
+
+async function loadProfiles() {
+  const { data, error } = await supabase.from("profiles").select("id, full_name, slug").eq("status", "published").order("full_name");
+  if (!error && data) {
+    allProfiles = data;
+    const optionsHtml = data.map(p => `<option value="${p.slug}">${p.full_name}</option>`).join("");
+    
+    const founderSelect = document.getElementById("treeFounder");
+    if (founderSelect) founderSelect.innerHTML += optionsHtml;
+    
+    document.querySelectorAll(".tree-child-select").forEach(select => {
+      select.innerHTML += optionsHtml;
+    });
+  }
+}
+
 async function loadContent() {
+  await loadProfiles();
+
   const { data, error } = await supabase.from("homepage_content").select("*").eq("id", 1).maybeSingle();
 
   if (error) {
@@ -39,6 +58,15 @@ async function loadContent() {
   setVal("archivalCaptionBottom", data.archival_caption_bottom);
   setVal("taglineText", data.tagline_text);
   setVal("footerAboutText", data.footer_about_text);
+  
+  // Load Tree JSON
+  if (data.tree_json) {
+    setVal("treeFounder", data.tree_json.founder || "");
+    const children = data.tree_json.children || [];
+    for (let i = 0; i < 5; i++) {
+      setVal(`treeChild${i + 1}`, children[i] || "");
+    }
+  }
 }
 
 async function handleSubmit(e) {
@@ -59,6 +87,16 @@ async function handleSubmit(e) {
     archival_caption_bottom: val("archivalCaptionBottom"),
     tagline_text: val("taglineText"),
     footer_about_text: val("footerAboutText"),
+    tree_json: {
+      founder: val("treeFounder"),
+      children: [
+        val("treeChild1"),
+        val("treeChild2"),
+        val("treeChild3"),
+        val("treeChild4"),
+        val("treeChild5")
+      ].filter(Boolean)
+    }
   };
 
   const { error } = await supabase.from("homepage_content").update(payload).eq("id", 1);

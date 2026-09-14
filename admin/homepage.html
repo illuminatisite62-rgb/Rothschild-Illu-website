@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -127,6 +127,48 @@
       <a href="membership.html">Membership</a>.</li>
           <li>Archive Preview — links to the public <a href="../archive.html" target="_blank" rel="noopener">Archive</a> page.</li>
         </ul>
+      </div>
+
+      <div class="admin-panel">
+        <div class="admin-panel-heading"><h2>Family Tree</h2></div>
+        <p class="hint" style="display:block; margin-bottom: 24px;">Configure the dynamic family tree on the homepage. Select the founder (top node) and up to 5 children. Images and dates are pulled automatically from their profiles.</p>
+        
+        <div class="admin-form-field">
+          <label for="treeFounder">Founder (Top Node)</label>
+          <select id="treeFounder">
+            <option value="">-- Select a Profile --</option>
+          </select>
+        </div>
+
+        <div style="margin-top: 32px; margin-bottom: 16px; border-top: 1px solid rgba(201, 168, 76, 0.2); padding-top: 16px;">
+          <h3 style="font-family: 'Playfair Display', serif; color: var(--color-gold-bright); font-size: 1.1rem; margin-bottom: 8px;">Children Nodes</h3>
+          <p class="hint" style="display:block; margin-bottom: 16px;">Select up to 5 profiles to appear below the founder.</p>
+        </div>
+
+        <div class="admin-form-row">
+          <div class="admin-form-field">
+            <label for="treeChild1">Child 1</label>
+            <select id="treeChild1" class="tree-child-select"><option value="">-- None --</option></select>
+          </div>
+          <div class="admin-form-field">
+            <label for="treeChild2">Child 2</label>
+            <select id="treeChild2" class="tree-child-select"><option value="">-- None --</option></select>
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-form-field">
+            <label for="treeChild3">Child 3</label>
+            <select id="treeChild3" class="tree-child-select"><option value="">-- None --</option></select>
+          </div>
+          <div class="admin-form-field">
+            <label for="treeChild4">Child 4</label>
+            <select id="treeChild4" class="tree-child-select"><option value="">-- None --</option></select>
+          </div>
+        </div>
+        <div class="admin-form-field" style="max-width: calc(50% - 12px);">
+          <label for="treeChild5">Child 5</label>
+          <select id="treeChild5" class="tree-child-select"><option value="">-- None --</option></select>
+        </div>
       </div>
 
       <div class="admin-panel">
