@@ -167,7 +167,10 @@ function addGalleryRow(data = {}) {
     `
     <div class="admin-form-field" style="flex: 2;">
       <label>Image URL</label>
-      <input type="text" data-field="image_url" value="${data.image_url ? data.image_url.replace(/"/g, "&quot;") : ""}" />
+      <div style="display: flex; gap: 8px;">
+        <input type="text" data-field="image_url" value="${data.image_url ? data.image_url.replace(/"/g, "&quot;") : ""}" placeholder="URL or choose file" style="flex: 1;" />
+        <input type="file" accept="image/*" class="gallery-file-upload" style="width: 105px; padding: 6px; font-size: 12px; cursor: pointer;" title="Upload Image" />
+      </div>
     </div>
     <div class="admin-form-field" style="flex: 2;">
       <label>Caption</label>
@@ -407,6 +410,25 @@ function initButtons() {
   document.getElementById("addRelationshipBtn").addEventListener("click", () => addRelationshipRow());
   document.getElementById("addGalleryImageBtn").addEventListener("click", () => addGalleryRow());
   document.getElementById("addSourceBtn").addEventListener("click", () => addSourceRow());
+
+  // Handle direct file uploads in Gallery rows
+  document.getElementById("galleryList").addEventListener("change", async (e) => {
+    if (e.target.matches('.gallery-file-upload')) {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const urlInput = e.target.previousElementSibling;
+      if (urlInput) {
+        urlInput.value = "Uploading...";
+        const url = await uploadAdminPhoto(file);
+        if (url) {
+          urlInput.value = url;
+        } else {
+          urlInput.value = "";
+        }
+      }
+    }
+  });
 
   document.getElementById("profileForm").addEventListener("submit", async (e) => {
     e.preventDefault();
