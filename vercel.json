@@ -1,5 +1,5 @@
 {
-  "cleanUrls": false,
+  "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
     {
@@ -7,6 +7,60 @@
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/family/:slug/", "destination": "/api/profile/[slug]" },
+    { "source": "/family/:slug",  "destination": "/api/profile/[slug]" },
+    { "source": "/sitemap.xml",   "destination": "/api/sitemap" },
+    { "source": "/robots.txt",    "destination": "/api/robots" }
+  ],
+  "redirects": [
+    {
+      "source": "/profile.html",
+      "destination": "/family",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/family.html",
+      "destination": "/family",
+      "permanent": true
+    },
+    {
+      "source": "/history.html",
+      "destination": "/history",
+      "permanent": true
+    },
+    {
+      "source": "/archive.html",
+      "destination": "/archive",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/join.html",
+      "destination": "/join",
+      "permanent": true
     }
   ]
 }

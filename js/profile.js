@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Individual profile page.
  * Reads ?slug=... from the URL, loads the profile (+ relationships, gallery,
  * sources) from Supabase, and renders only the sections that have content.
@@ -63,8 +63,8 @@ const SAMPLE_PROFILES = {
       { slug: "james-mayer-de-rothschild", full_name: "James Mayer de Rothschild" },
     ],
     sources: [
-      { label: "Ferguson, Niall — The House of Rothschild: Money's Prophets, 1798–1848", url: "" },
-      { label: "Encyclopaedia Britannica — Mayer Amschel Rothschild", url: "" },
+      { label: "Ferguson, Niall â€” The House of Rothschild: Money's Prophets, 1798â€“1848", url: "" },
+      { label: "Encyclopaedia Britannica â€” Mayer Amschel Rothschild", url: "" },
     ],
   },
   "nathan-mayer-rothschild": {
@@ -86,7 +86,7 @@ const SAMPLE_PROFILES = {
     father_name: "Mayer Amschel Rothschild",
     spouse_name: "Hannah Barent Cohen",
     sources: [
-      { label: "Ferguson, Niall — The House of Rothschild: Money's Prophets, 1798–1848", url: "" },
+      { label: "Ferguson, Niall â€” The House of Rothschild: Money's Prophets, 1798â€“1848", url: "" },
     ],
   },
   "james-mayer-de-rothschild": {
@@ -98,9 +98,9 @@ const SAMPLE_PROFILES = {
     nationality: "French",
     family_branch: "Paris",
     occupation: "Banker",
-    titles: "Founder, de Rothschild Frères",
+    titles: "Founder, de Rothschild FrÃ¨res",
     portrait_url: "assets/images/05_archival_family_photo.jpg",
-    short_bio: "James Mayer de Rothschild founded the French branch of the family and built de Rothschild Frères into a leading Parisian bank.",
+    short_bio: "James Mayer de Rothschild founded the French branch of the family and built de Rothschild FrÃ¨res into a leading Parisian bank.",
     career: "Financed French railways and government bonds, establishing the Paris house as a major force in 19th-century French finance.",
     father_name: "Mayer Amschel Rothschild",
     sources: [],
@@ -253,7 +253,7 @@ function renderRelatives(relationships) {
             <div class="relative-info">
               ${
                 r.slug
-                  ? `<a href="profile.html?slug=${encodeURIComponent(r.slug)}">${escapeHtml(r.full_name)}</a>`
+                  ? `<a href="/family/${encodeURIComponent(r.slug)}">${escapeHtml(r.full_name)}</a>`
                   : `<span>${escapeHtml(r.full_name)}</span>`
               }
               <span class="relative-role">${escapeHtml(RELATIONSHIP_LABELS[r.type] || r.type)}</span>
@@ -362,3 +362,4 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   renderProfile(profile);
 });
+

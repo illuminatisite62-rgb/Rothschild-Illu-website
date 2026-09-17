@@ -335,6 +335,7 @@ function collectProfilePayload(status) {
     quotes: val("quotes") || null,
     seo_title: val("seoTitle") || null,
     seo_description: val("seoDescription") || null,
+    seo_noindex: document.getElementById("searchVisibility")?.value === "noindex",
     featured: document.getElementById("featured").checked,
     status,
   };
@@ -439,8 +440,66 @@ function initButtons() {
   document.getElementById("previewBtn").addEventListener("click", async () => {
     const id = await saveProfile(document.getElementById("statusDisplay").value === "Published" ? "published" : "draft");
     if (!id) return;
-    window.open(`../profile.html?slug=${encodeURIComponent(val("slug"))}`, "_blank", "noopener");
+    window.open(`https://www.davidrenederothschild.com/family/${encodeURIComponent(val("slug"))}/`, "_blank", "noopener");
   });
+}
+
+function initSeoPreview() {
+  const seoTitleInput = document.getElementById("seoTitle");
+  const seoDescInput = document.getElementById("seoDescription");
+  const slugInput = document.getElementById("slug");
+  const fullNameInput = document.getElementById("fullName");
+  const shortBioInput = document.getElementById("shortBio");
+
+  function updatePreview() {
+    const slug = slugInput?.value || "";
+    const fullName = fullNameInput?.value || "";
+
+    // Update slug previews
+    const seoSlugPreview = document.getElementById("seoSlugPreview");
+    const googlePreviewSlug = document.getElementById("googlePreviewSlug");
+    if (seoSlugPreview) seoSlugPreview.textContent = slug || "{slug}";
+    if (googlePreviewSlug) googlePreviewSlug.textContent = slug || "slug";
+
+    // Title preview
+    const customTitle = seoTitleInput?.value?.trim();
+    const autoTitle = fullName ? `${fullName} | Biography & Family History | Rothschild` : "Profile title will appear here";
+    const displayTitle = customTitle || autoTitle;
+    const googleTitle = document.getElementById("googlePreviewTitle");
+    if (googleTitle) {
+      googleTitle.textContent = displayTitle;
+      googleTitle.style.color = customTitle ? "#1a0dab" : "#888";
+    }
+
+    // Description preview
+    const customDesc = seoDescInput?.value?.trim();
+    const autoDesc = shortBioInput?.value?.trim()
+      ? shortBioInput.value.trim().slice(0, 160)
+      : (fullName ? `Explore the life of ${fullName} — biography, family history and historical legacy.` : "Meta description will appear here.");
+    const displayDesc = customDesc || autoDesc;
+    const googleDesc = document.getElementById("googlePreviewDesc");
+    if (googleDesc) googleDesc.textContent = displayDesc;
+
+    // Character counters
+    const titleCount = document.getElementById("seoTitleCount");
+    const descCount = document.getElementById("seoDescCount");
+    if (titleCount) {
+      const len = (seoTitleInput?.value || "").length;
+      titleCount.textContent = len;
+      titleCount.style.color = len > 60 ? "#c0392b" : len > 50 ? "#27ae60" : "inherit";
+    }
+    if (descCount) {
+      const len = (seoDescInput?.value || "").length;
+      descCount.textContent = len;
+      descCount.style.color = len > 160 ? "#c0392b" : len > 140 ? "#27ae60" : "inherit";
+    }
+  }
+
+  [seoTitleInput, seoDescInput, slugInput, fullNameInput, shortBioInput].forEach((el) => {
+    if (el) el.addEventListener("input", updatePreview);
+  });
+
+  updatePreview();
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -451,6 +510,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   initSlugAutoFill();
   initUploads();
   initButtons();
+  initSeoPreview();
 
   await loadProfilePickerList();
 
@@ -459,5 +519,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   if (id) {
     profileId = id;
     await loadExistingProfile(id);
+    // Re-run preview after data loads
+    setTimeout(initSeoPreview, 100);
   }
 });

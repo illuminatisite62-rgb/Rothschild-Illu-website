@@ -1,5 +1,5 @@
-/**
- * Family Directory — loads profiles from Supabase (published only),
+﻿/**
+ * Family Directory â€” loads profiles from Supabase (published only),
  * falls back to a small static sample set when Supabase isn't configured.
  * All search/filter/sort happens client-side over the loaded set.
  */
@@ -37,7 +37,7 @@ const SAMPLE_PROFILES = [
     death_date: "1868-11-15",
     occupation: "Banker",
     family_branch: "paris",
-    short_bio: "Founder of the French branch of the family and de Rothschild Frères in Paris.",
+    short_bio: "Founder of the French branch of the family and de Rothschild FrÃ¨res in Paris.",
     portrait_url: "assets/images/05_archival_family_photo.jpg",
     featured: true,
   },
@@ -100,7 +100,7 @@ function lifespanText(birth, death) {
   const b = birth ? new Date(birth).getFullYear() : "?";
   if (!death) return `b. ${b}`;
   const d = new Date(death).getFullYear();
-  return `${b} – ${d}`;
+  return `${b} â€“ ${d}`;
 }
 
 function centuryOf(dateStr) {
@@ -185,7 +185,7 @@ function cardTemplate(p) {
         <p class="profile-card-life">${lifespanText(p.birth_date, p.death_date)}</p>
         ${p.occupation ? `<p class="profile-card-role">${escapeHtml(p.occupation)}</p>` : ""}
         <p class="profile-card-bio">${escapeHtml(p.short_bio || "")}</p>
-        <a href="profile.html?slug=${encodeURIComponent(p.slug)}" class="profile-card-link">View Biography</a>
+        <a href="/family/${encodeURIComponent(p.slug)}" class="profile-card-link">View Biography</a>
       </div>
     </article>
   `;
@@ -239,3 +239,4 @@ document.addEventListener("DOMContentLoaded", async function () {
   allProfiles = await loadProfiles();
   render();
 });
+
