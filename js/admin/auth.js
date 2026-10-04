@@ -59,7 +59,7 @@ export async function requireAdmin() {
       // half-authenticated non-admin session sitting in the browser.
       await supabase.auth.signOut();
     }
-    window.location.href = "index.html?reason=unauthorized";
+    window.location.href = "/admin?reason=unauthorized";
     return null;
   }
 
@@ -71,7 +71,7 @@ export async function requireAdmin() {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
       await supabase.auth.signOut();
-      window.location.href = "index.html";
+      window.location.href = "/admin";
     });
   }
 
@@ -133,7 +133,7 @@ function initLoginForm() {
     }
 
     showStatus("Signed in — redirecting…", "success");
-    window.location.href = "dashboard.html";
+    window.location.href = "/admin/dashboard";
   });
 }
 

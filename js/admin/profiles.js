@@ -49,7 +49,7 @@ function render() {
   const tbody = document.querySelector("#profilesTable tbody");
 
   if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" class="admin-empty">No profiles match. <a href="profile-editor.html">Add one</a>.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="admin-empty">No profiles match. <a href="/admin/profile-editor">Add one</a>.</td></tr>`;
     return;
   }
 
@@ -64,8 +64,8 @@ function render() {
       <td>${formatDate(p.updated_at)}</td>
       <td>
         <div class="row-actions">
-          <a href="profile-editor.html?id=${p.id}">Edit</a>
-          <a href="../profile.html?slug=${encodeURIComponent(p.slug)}" target="_blank" rel="noopener">Preview</a>
+          <a href="/admin/profile-editor?id=${p.id}">Edit</a>
+          <a href="/family/${encodeURIComponent(p.slug)}" target="_blank" rel="noopener">Preview</a>
           <button type="button" data-action="toggle-status">${p.status === "published" ? "Unpublish" : "Publish"}</button>
           <button type="button" data-action="toggle-featured">${p.featured ? "Unfeature" : "Feature"}</button>
           <button type="button" data-action="duplicate">Duplicate</button>

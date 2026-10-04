@@ -63,7 +63,7 @@ async function loadRecentProfiles() {
     return;
   }
   if (!data || !data.length) {
-    tbody.innerHTML = `<tr><td colspan="3" class="admin-empty">No profiles yet. <a href="profile-editor.html">Add the first one</a>.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="3" class="admin-empty">No profiles yet. <a href="/admin/profile-editor">Add the first one</a>.</td></tr>`;
     return;
   }
 
@@ -98,7 +98,7 @@ async function loadMembershipPending() {
   }
 
   tbody.innerHTML = data.map(m => `
-    <tr style="cursor:pointer;" onclick="location.href='membership.html'">
+    <tr style="cursor:pointer;" onclick="location.href='/admin/membership'">
       <td>${escapeHtml(m.full_name)}</td>
       <td>${escapeHtml(m.email)}</td>
       <td>${escapeHtml(m.country || "—")}</td>
