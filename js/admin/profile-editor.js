@@ -1,4 +1,4 @@
-import { supabase } from "../supabase-client.js";
+﻿import { supabase } from "../supabase-client.js";
 import { requireAdmin } from "./auth.js";
 
 const RELATIONSHIP_TYPES = ["father", "mother", "spouse", "son", "daughter", "sibling", "relative", "other"];
@@ -440,7 +440,7 @@ function initButtons() {
   document.getElementById("previewBtn").addEventListener("click", async () => {
     const id = await saveProfile(document.getElementById("statusDisplay").value === "Published" ? "published" : "draft");
     if (!id) return;
-    window.open(`https://www.davidrenederothschild.com/family/${encodeURIComponent(val("slug"))}/`, "_blank", "noopener");
+    window.open(`https://www.therothschildilluminati.com/family/${encodeURIComponent(val("slug"))}/`, "_blank", "noopener");
   });
 }
 

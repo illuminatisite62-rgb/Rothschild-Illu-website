@@ -1,10 +1,10 @@
-/**
+﻿/**
  * Vercel Serverless Function — /api/sitemap.js
  * Dynamically generates sitemap.xml from published profiles and static pages.
  * Accessed at: /sitemap.xml (via vercel.json rewrite)
  */
 
-const SITE_URL = "https://www.davidrenederothschild.com";
+const SITE_URL = "https://www.therothschildilluminati.com";
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 

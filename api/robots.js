@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Vercel Serverless Function — /api/robots.js
  * Returns robots.txt with sitemap directive.
  * Accessed at: /robots.txt (via vercel.json rewrite)
@@ -15,7 +15,7 @@ Disallow: /admin/
 Disallow: /api/
 
 # Sitemap
-Sitemap: https://www.davidrenederothschild.com/sitemap.xml
+Sitemap: https://www.therothschildilluminati.com/sitemap.xml
 `;
 
   res
